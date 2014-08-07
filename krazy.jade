@@ -1,10 +1,37 @@
 head
-  title krazy
+  title krazy.io
 
 body
-  +hello
+  #topbar.navbar.navbar-default.navbar-fixed-top(role="navigation")
+    .container
+      ul.nav.navbar-nav.navbar-left
+        a.navbar-brand krazy.io
 
-template(name="hello")
-  h1 Hello World!
-  = greeting
-  input(type="button" value="Click")
+  #userbar
+    +user
+
+  +board
+
+template(name="user")
+  ul.nav.navbar-nav.navbar-right
+    li
+      form.navbar-form
+        button.navbutton.btn Logout
+    li
+      img(src=avatar width="30" height="30")
+
+template(name="board")
+  h1 My Board
+  input#magicBar(type="text" placeholder="type, friend")
+
+  .widget
+    .widget-header
+      img(src=owner.avatar width="20" height="20")
+      button.delete X
+    div.widget-body
+      = contents
+    div.widget-votes
+      div.yes-votes
+        | Yes: 
+      div.no-votes
+        | No: 

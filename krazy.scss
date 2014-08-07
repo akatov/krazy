@@ -1,1 +1,98 @@
-/* CSS declarations go here */
+html, body {
+  margin: 0px;
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+/* base color used in topbar */
+$basecolor: #AD141E;
+
+#topbar {
+  height:54px;
+  background: $basecolor;
+  margin:4px;
+  @include border-radius(10px);
+}
+
+a.navbar-brand {
+  color:lighten($basecolor,50%) !important;
+  font-size: 230%;
+}
+
+.navbutton {
+  color:lighten($basecolor,50%);
+  background-color:lighten($basecolor,5%);
+  @include border-radius(10px);
+  &:hover {
+    color:lighten($basecolor,60%);
+    background-color:lighten($basecolor,10%);
+  };
+}
+
+.navbar-form #magicnav {
+  width:70%;
+}
+
+.navbar-center {
+  display: inline-block;
+  float: none;
+  text-align: center;
+}
+
+
+#main-area {
+  position: absolute;
+  top:54px;
+}
+
+.widget {
+  min-width: 100px;
+  position: absolute;
+  border: 1px black solid;
+  padding: 5px;
+  @include border-radius(10px);
+}
+
+.widget-header {
+  background-color: gray;
+  text-align: right;
+}
+
+.hidden {
+  display: none;
+}
+
+.link {
+  position: absolute;
+  border: 1px black solid;
+  -webkit-transform-origin: 0 0;
+}
+
+#home li:after {
+  content: ','
+}
+
+#home li:last-of-type:after {
+  content:'.'
+}
+
+
+.avatar {
+
+  &.small {
+    width: 20px;
+    height: 20px;
+  }
+
+  &.large {
+    width: 44px;
+    height: 44px;
+    margin: 5px;
+  }
+
+}
