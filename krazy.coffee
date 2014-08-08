@@ -12,6 +12,8 @@ getCurrent = -> cUser.findOne()
 
 if Meteor.isClient
 
+  position = 100
+
   Template.application.user = ->
     getCurrent()
 
@@ -31,8 +33,22 @@ if Meteor.isClient
 
   Template.board.events
     'keypress #magicBar': (event) ->
+      t = $(event.target)
       if event.charCode == 13
-        console.log 'pressed enter'
+        value = t.val()
+        if value.length > 0
+          console.log 'will create new widget containing', value
+          Widgets.insert
+            owner: getCurrent()
+            contents: value
+            position:
+              x: position
+              y: position
+            votes:
+              yes: []
+              no: []
+          position += 50
+          t.val('')
 
   Template.widget.style = ->
     "left: #{ @position.x }px; top: #{ @position.y }px;"
