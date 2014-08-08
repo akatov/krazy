@@ -5,37 +5,39 @@ if Meteor.isClient
     name: 'Bruno'
   }
 
-  Template.application.user = -> user
+  Template.application.user = ->
+    user
 
   Template.application.events
     'click .logout': ->
       console.log 'logging out'
 
-  Template.board.widgets = -> [
-    owner: user
-    contents: 'I think this board is awesome.'
-    position:
-      x: 0
-      y: 0
-  ,
-    owner: user
-    contents: 'I think Ember.JS is cool.'
-    position:
-      x: 200
-      y: 0
-  ,
-    owner: user
-    contents: 'I think meteor is cool.'
-    position:
-      x: 0
-      y: 200
-  ,
-    owner: user
-    contents: 'I think famo.us is amazing!'
-    position:
-      x: 200
-      y: 200
-  ]
+  Template.board.widgets = ->
+    [
+      owner: user
+      contents: 'I think this board is awesome.'
+      position:
+        x: 0
+        y: 0
+    ,
+      owner: user
+      contents: 'I think Ember.JS is cool.'
+      position:
+        x: 200
+        y: 0
+    ,
+      owner: user
+      contents: 'I think meteor is cool.'
+      position:
+        x: 0
+        y: 200
+    ,
+      owner: user
+      contents: 'I think famo.us is amazing!'
+      position:
+        x: 200
+        y: 200
+    ]
 
   Template.board.events
     'keypress #magicBar': (event) ->
@@ -48,6 +50,19 @@ if Meteor.isClient
   Template.widget.events
     'click .delete': ->
       console.log 'deleting widget'
+
+  Template.widget.rendered = ->
+    p = @data.position
+    onDragOrStop = (event,ui) -> 
+      o = ui.offset
+      p.x = o.left
+      p.y = o.top
+    
+    $(@find '.widget').draggable
+      handle: '.widget-header'
+      cancel: '.widget-header button'
+      drag: onDragOrStop
+      stop: onDragOrStop
 
 if Meteor.isServer
   Meteor.startup ->

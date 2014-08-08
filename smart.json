@@ -1,6 +1,7 @@
 {
   "packages": {
     "jade": {},
-    "scss": {}
+    "scss": {},
+    "jqueryui": {}
   }
 }
