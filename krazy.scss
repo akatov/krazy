@@ -100,3 +100,13 @@ a.navbar-brand {
 #board {
   position: absolute;
 }
+
+
+a {
+  color: blue;
+  cursor: pointer;
+}
+
+a:hover {
+  color: red;
+}

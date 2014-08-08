@@ -37,10 +37,10 @@ template(name="widget")
       = contents
     div.widget-votes
       div.yes-votes
-        | Yes:
+        a.yes Yes:
         each votes.yes
           img(src=avatar width="20" height="20")
       div.no-votes
-        | No: 
+        a.no No:
         each votes.no
           img(src=avatar width="20" height="20")

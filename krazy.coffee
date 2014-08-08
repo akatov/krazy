@@ -41,6 +41,24 @@ if Meteor.isClient
     'click .delete': ->
       Widgets.remove @_id
 
+    'click .yes': ->
+      u = getCurrent()
+      Widgets.update(
+        _id: @_id
+      ,
+        $pull: 'votes.no': _id: u._id
+        $addToSet: 'votes.yes': u
+      )
+
+    'click .no': ->
+      u = getCurrent()
+      Widgets.update(
+        _id: @_id
+      ,
+        $pull: 'votes.yes': _id: u._id
+        $addToSet: 'votes.no': u
+      )
+
   Template.widget.rendered = ->
     onDragOrStop = (event, ui) =>
       p = ui.position
