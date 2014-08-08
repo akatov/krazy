@@ -1,10 +1,12 @@
-Users = new Meteor.Collection 'users'
+root = exports ? @
 
-Widgets = new Meteor.Collection 'widgets'
+root.Users = new Meteor.Collection 'users'
+
+root.Widgets = new Meteor.Collection 'widgets'
 
 # horrible hack to simulate currently logged in user
 # TODO: use Meteor user management
-cUser = new Meteor.Collection 'cUser'
+root.cUser = new Meteor.Collection 'cUser'
 
 getBruno = -> Users.findOne name: 'Bruno'
 getDmitri = -> Users.findOne name: 'Dmitri'
@@ -87,6 +89,7 @@ if Meteor.isClient
       stop: onDragOrStop
 
 if Meteor.isServer
+
   Meteor.startup ->
 
     # always clean collections at startup for now
