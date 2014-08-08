@@ -5,17 +5,34 @@ if Meteor.isClient
     name: 'Bruno'
   }
 
-  Template.user.avatar = -> user.avatar
-  Template.user.name = -> user.name
+  Template.application.user = -> user
 
-  Template.board.owner = -> user
+  Template.application.events
+    'click .logout': ->
+      console.log 'logging out'
 
-  Template.board.contents = 'I think this board is awesome.'
+  Template.board.widgets = -> [
+    owner: user
+    contents: 'I think this board is awesome.'
+  ,
+    owner: user
+    contents: 'I think Ember.JS is cool.'
+  ,
+    owner: user
+    contents: 'I think meteor is cool.'
+  ,
+    owner: user
+    contents: 'I think famo.us is amazing!'
+  ]
 
   Template.board.events
-    'click input': ->
-      if typeof console != 'undefined'
-        console.log "You pressed the button"
+    'keypress #magicBar': (event) ->
+      if event.charCode == 13
+        console.log 'pressed enter'
+
+  Template.widget.events
+    'click .delete': ->
+      console.log 'deleting widget'
 
 if Meteor.isServer
   Meteor.startup ->
