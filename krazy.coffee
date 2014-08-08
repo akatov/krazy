@@ -2,14 +2,29 @@ Users = new Meteor.Collection 'users'
 
 Widgets = new Meteor.Collection 'widgets'
 
+# horrible hack to simulate currently logged in user
+# TODO: use Meteor user management
+cUser = new Meteor.Collection 'cUser'
+
+getBruno = -> Users.findOne name: 'Bruno'
+getDmitri = -> Users.findOne name: 'Dmitri'
+getCurrent = -> cUser.findOne()
+
 if Meteor.isClient
 
   Template.application.user = ->
-    Users.findOne()
+    getCurrent()
 
   Template.application.events
     'click .logout': ->
-      console.log 'logging out'
+      u = getCurrent()
+      b = getBruno()
+      d = getDmitri()
+      cUser.remove u._id
+      if u._id == b._id
+        cUser.insert d
+      else
+        cUser.insert b
 
   Template.board.widgets = ->
     Widgets.find()
@@ -43,6 +58,7 @@ if Meteor.isServer
     # always clean collections at startup for now
     Users.remove _id: $exists: true
     Widgets.remove _id: $exists: true
+    cUser.remove _id: $exists: true
 
     if Users.find().count() == 0
       Users.insert user for user in [
@@ -52,8 +68,10 @@ if Meteor.isServer
         name: 'Dmitri'
         avatar: 'https://avatars3.githubusercontent.com/u/1148449'
       ]
-    bruno = Users.findOne name: 'Bruno'
-    dmitri = Users.findOne name: 'Dmitri'
+    bruno = getBruno()
+    dmitri = getDmitri()
+
+    cUser.insert bruno
 
     # include the full user object for now
     if Widgets.find().count() == 0
