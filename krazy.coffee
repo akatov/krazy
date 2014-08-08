@@ -39,7 +39,7 @@ if Meteor.isClient
 
   Template.widget.events
     'click .delete': ->
-      console.log 'deleting widget'
+      Widgets.remove @_id
 
   Template.widget.rendered = ->
     onDragOrStop = (event, ui) =>
