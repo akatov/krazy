@@ -27,11 +27,9 @@ if Meteor.isClient
       console.log 'deleting widget'
 
   Template.widget.rendered = ->
-    p = @data.position
-    onDragOrStop = (event,ui) -> 
-      o = ui.offset
-      p.x = o.left
-      p.y = o.top
+    onDragOrStop = (event, ui) =>
+      p = ui.position
+      Widgets.update @data._id, $set: position: { x: p.left, y: p.top }
 
     $(@find '.widget').draggable
       handle: '.widget-header'
