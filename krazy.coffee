@@ -14,21 +14,36 @@ if Meteor.isClient
   Template.board.widgets = -> [
     owner: user
     contents: 'I think this board is awesome.'
+    position:
+      x: 0
+      y: 0
   ,
     owner: user
     contents: 'I think Ember.JS is cool.'
+    position:
+      x: 200
+      y: 0
   ,
     owner: user
     contents: 'I think meteor is cool.'
+    position:
+      x: 0
+      y: 200
   ,
     owner: user
     contents: 'I think famo.us is amazing!'
+    position:
+      x: 200
+      y: 200
   ]
 
   Template.board.events
     'keypress #magicBar': (event) ->
       if event.charCode == 13
         console.log 'pressed enter'
+
+  Template.widget.style = ->
+    "left: #{ @position.x }px; top: #{ @position.y }px;"
 
   Template.widget.events
     'click .delete': ->
