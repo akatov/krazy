@@ -19,6 +19,16 @@ $basecolor: #AD141E;
   overflow: hidden;
   display: block;
 
+  #logo {
+    float: left;
+    border: 0;
+    margin: 10px;
+	  background: url(8ball.png) no-repeat center;
+	  background-size: 40px 40px;
+	  width: 40px;
+	  height: 40px;
+  }
+
   #brand {
     margin: 10px;
     float: left;
