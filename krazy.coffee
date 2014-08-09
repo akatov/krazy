@@ -8,8 +8,34 @@ if Meteor.isClient
   # TODO: use a better layout algorithm
   position = 0
 
+  Session.set 'showNewWidgetForm', false
+
+  votingTemplates = [
+    { name:'Yes/No',  options:['Yes','No']  },
+    { name:"Ok",      options:["Ok"]        },
+    { name:"A/B/C",   options:["A","B","C"] }
+  ]
+
+  Session.set 'votingTemplates', votingTemplates
+
+  setTemplate = (name) ->
+    Session.set 'selectedTemplate', name
+    options = votingTemplates.filter((x) => x.name == name)[0].options
+    Session.set 'votingOptions', options 
+
+  setTemplate('Yes/No')   # set default template
+
   Template.board.widgets = ->
     Widgets.find()
+
+  Template.board.showNewWidgetForm = ->
+    Session.get 'showNewWidgetForm'
+
+  Template.newWidgetForm.votingTemplates = ->
+    Session.get 'votingTemplates'
+
+  Template.newWidgetForm.votingOptions = ->
+    Session.get 'votingOptions'
 
   Template.board.events
     'keypress #magicBar': (event) ->
@@ -28,6 +54,33 @@ if Meteor.isClient
               no: []
           position += 50
           t.val('')
+    'click #addNewWidget': (event) -> 
+      Session.set 'showNewWidgetForm', true
+
+  Template.newWidgetForm.events
+
+    'click #cancelNewWidget': (event) ->
+      Session.set 'showNewWidgetForm', false
+
+    'click button.templateSelect': (event) ->
+      name = $(event.target).attr("name")
+      setTemplate(name)
+
+    'click button.newVoteOption': (event) ->
+      options = Session.get 'votingOptions'
+      options.push ''
+      Session.set 'votingOptions', options
+
+    'click button.newVoteOption': (event) ->
+      options = Session.get 'votingOptions'
+      options.push ''
+      Session.set 'votingOptions', options
+
+    'click button.deleteVoteOption': (event) ->
+      name = $(event.target).attr("name")
+      options = Session.get 'votingOptions'
+      options = options.filter((x)=> x!=name)
+      Session.set 'votingOptions', options
 
   Template.widget.style = ->
     "left: #{ @position.x }px; top: #{ @position.y }px;"

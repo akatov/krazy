@@ -30,6 +30,9 @@ template(name="board")
   #board
     each widgets
       +widget
+  button#addNewWidget new
+  if showNewWidgetForm
+    +newWidgetForm
 
 template(name="widget")
   .widget(style=style)
@@ -53,3 +56,30 @@ template(name="widget")
         a.no No:
         each votes.no
           img(src=profile.avatar width="20" height="20")
+
+template(name="newWidgetForm")
+  #newWidgetForm
+    button#cancelNewWidget cancel
+    h3 New widget text:
+    div(style="width:100%;")
+      textarea#newContent
+    h3 Interaction type:
+    div(style="width:100%;")
+      #votingTemplates
+        h3 Template
+        ul
+          each votingTemplates
+            li
+              button.templateSelect(name=name) 
+                = name   
+      #customVotes
+        h3 Options
+        ul
+          each votingOptions
+            li 
+              input.voteOption(type='text', value=this)
+              button.deleteVoteOption(name=this) X
+          li
+            button.newVoteOption add option
+    button#confirmNewWidget Add to board! 
+

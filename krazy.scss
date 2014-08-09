@@ -115,9 +115,9 @@ a:hover {
   position: absolute;
   opacity: 0.9;
   width: 60%;
-  height: 60%;
+  height: 400px;
   z-index: 2 ; 
-  background: grey;
+  background: lighten($basecolor,40%);
   left:0;
   right:0;
   margin-left:auto;
@@ -129,4 +129,36 @@ a:hover {
   @include border-radius(10px);
 }
 
+#newContent {
+  position: relative;
+  width: 80%;
+  left: 10%;
+  height: 70px;
+} 
+
+#votingTemplates {
+  float:left;
+  position: relative;
+  width: 40%;
+  left: 5%;
+  height: 100%
+}
+
+#customVotes {
+  float:right;
+  position: relative;
+  width: 40%;
+  right: 5%;
+  height: 100%
+}
+
+#cancelNewWidget {
+  position: inherit; 
+  right:0px;
+}
+
+#confirmNewWidget {
+  position: inherit;
+  bottom:0px;
+}
 
