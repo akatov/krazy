@@ -38,6 +38,9 @@ if Meteor.isClient
   Template.widget.style = ->
     "left: #{ @position.x }px; top: #{ @position.y }px;"
 
+  Template.widget.canEdit = ->
+    canModifyWidget @
+
   Template.widget.events
     'click .delete': ->
       if canModifyWidget @
