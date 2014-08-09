@@ -32,6 +32,21 @@ if Meteor.isClient
   Template.widget.style = ->
     "left: #{ @position.x }px; top: #{ @position.y }px;"
 
+  isNewWidget = (widget) ->
+    uid = Meteor.userId()
+    return false if uid == widget.owner._id
+    hasVoted = false
+    [widget.votes.yes, widget.votes.no].forEach (arr) ->
+      arr.forEach (voter) ->
+        hasVoted = true if voter._id == uid
+    !hasVoted
+
+  Template.widget.classes = ->
+    if isNewWidget @
+      'widget new'
+    else
+      'widget'
+
   Template.widget.events
     'click .delete': ->
       Widgets.remove @_id

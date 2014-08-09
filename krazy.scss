@@ -58,6 +58,10 @@ a.navbar-brand {
   @include border-radius(10px);
 }
 
+.widget.new {
+  border: 2px red solid;
+}
+
 .widget-header {
   background-color: gray;
   text-align: right;
