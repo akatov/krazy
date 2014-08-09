@@ -44,12 +44,16 @@ template(name="widget")
     else
       div.widget-body
         = contents
-    div.widget-votes
-      div.yes-votes
-        a.yes Yes:
-        each votes.yes
-          img(src=profile.avatar width="20" height="20")
-      div.no-votes
-        a.no No:
-        each votes.no
-          img(src=profile.avatar width="20" height="20")
+    .widget-votes
+      .vote-option
+        .vote-option-name
+          a.yes Yes:
+        .voters
+          each votes.yes
+            img.voter(src=profile.avatar width="20" height="20")
+      .vote-option
+        .vote-option-name
+          a.no No:
+        .voters
+          each votes.no
+            img.voter(src=profile.avatar width="20" height="20")
