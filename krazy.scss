@@ -13,39 +13,32 @@ html, body {
 $basecolor: #AD141E;
 
 #topbar {
-  height:54px;
   background: $basecolor;
-  margin:4px;
+  margin: 10px;
   @include border-radius(10px);
+  overflow: hidden;
+  display: block;
+
+  #brand {
+    margin: 10px;
+    float: left;
+    color: lighten($basecolor,50%) !important;
+    font-size: 200%;
+    font-variant: small-caps;
+  }
+
+  #userbar {
+    margin: 10px;
+    float: right;
+
+    .login-display-name {
+      color: lighten($basecolor,50%) !important;
+    }
+  }
 }
 
-a.navbar-brand {
-  color:lighten($basecolor,50%) !important;
-  font-size: 230%;
-}
-
-.navbutton {
-  color:lighten($basecolor,50%);
-  background-color:lighten($basecolor,5%);
-  @include border-radius(10px);
-  &:hover {
-    color:lighten($basecolor,60%);
-    background-color:lighten($basecolor,10%);
-  };
-}
-
-.navbar-form #magicnav {
-  width:70%;
-}
-
-.navbar-center {
-  display: inline-block;
-  float: none;
-  text-align: center;
-}
-
-
-#main-area {
+#main {
+  margin: 10px;
   position: absolute;
   top:54px;
 }
@@ -72,15 +65,6 @@ a.navbar-brand {
   border: 1px black solid;
   -webkit-transform-origin: 0 0;
 }
-
-#home li:after {
-  content: ','
-}
-
-#home li:last-of-type:after {
-  content:'.'
-}
-
 
 .avatar {
 
