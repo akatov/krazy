@@ -13,7 +13,7 @@ template(name='application')
 
   #userbar
     if currentUser
-      with user
+      +with currentUser
         +userbar
     +loginButtons
 

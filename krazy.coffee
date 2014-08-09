@@ -8,9 +8,6 @@ if Meteor.isClient
   # TODO: use a better layout algorithm
   position = 0
 
-  Template.application.user = ->
-    Meteor.user()
-
   Template.board.widgets = ->
     Widgets.find()
 
