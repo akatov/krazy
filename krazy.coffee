@@ -54,12 +54,29 @@ if Meteor.isClient
         $addToSet: 'votes.no': u
       )
 
+    'dblclick .widget-header': ->
+      Widgets.update(
+        _id: @_id
+      ,
+        $set: editable: !@editable
+      )
+
+    'click .save': (event, ui) ->
+      v = ui.$('textarea').val()
+      Widgets.update(
+        _id: @_id
+      ,
+        $set:
+          contents: v
+          editable: false
+      )
+
   Template.widget.rendered = ->
     onDragOrStop = (event, ui) =>
       p = ui.position
       Widgets.update @data._id, $set: position: { x: p.left, y: p.top }
 
-    $(@find '.widget').draggable
+    @$('.widget').draggable
       handle: '.widget-header'
       cancel: '.widget-header button'
       drag: onDragOrStop
