@@ -33,12 +33,14 @@ template(name="widget")
   div(class=classes style=style)
     .widget-header
       img(src=owner.profile.avatar width="20" height="20")
-      button.delete X
+      if canEdit
+        button.delete X
     if editable
       .widget-body
         textarea
           = contents
-        button.save Save
+        if canEdit
+          button.save Save
     else
       .widget-body
         = contents

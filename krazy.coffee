@@ -29,8 +29,11 @@ if Meteor.isClient
           position += 50
           t.val('')
 
-  Template.widget.style = ->
-    "left: #{ @position.x }px; top: #{ @position.y }px;"
+  canModifyWidget = (w) ->
+    w.owner._id == Meteor.user()._id && w.votes.yes.length == 0 && w.votes.no.length == 0
+
+  canVoteOnWidget = (w) ->
+    !w.editable
 
   isNewWidget = (widget) ->
     uid = Meteor.userId()
@@ -41,6 +44,12 @@ if Meteor.isClient
         hasVoted = true if voter._id == uid
     !hasVoted
 
+  Template.widget.canEdit = ->
+    canModifyWidget @
+
+  Template.widget.style = ->
+    "left: #{ @position.x }px; top: #{ @position.y }px;"
+
   Template.widget.classes = ->
     if isNewWidget @
       'widget new'
@@ -49,42 +58,47 @@ if Meteor.isClient
 
   Template.widget.events
     'click .delete': ->
-      Widgets.remove @_id
+      if canModifyWidget @
+        Widgets.remove @_id
 
     'click .yes': ->
-      u = Meteor.user()
-      Widgets.update(
-        _id: @_id
-      ,
-        $pull: 'votes.no': _id: u._id
-        $addToSet: 'votes.yes': u
-      )
+      if canVoteOnWidget @
+        u = Meteor.user()
+        Widgets.update(
+          _id: @_id
+        ,
+          $pull: 'votes.no': _id: u._id
+          $addToSet: 'votes.yes': u
+        )
 
     'click .no': ->
-      u = Meteor.user()
-      Widgets.update(
-        _id: @_id
-      ,
-        $pull: 'votes.yes': _id: u._id
-        $addToSet: 'votes.no': u
-      )
+      if canVoteOnWidget @
+        u = Meteor.user()
+        Widgets.update(
+          _id: @_id
+        ,
+          $pull: 'votes.yes': _id: u._id
+          $addToSet: 'votes.no': u
+        )
 
     'dblclick .widget-header': ->
-      Widgets.update(
-        _id: @_id
-      ,
-        $set: editable: !@editable
-      )
+      if canModifyWidget @
+        Widgets.update(
+          _id: @_id
+        ,
+          $set: editable: !@editable
+        )
 
     'click .save': (event, ui) ->
-      v = ui.$('textarea').val()
-      Widgets.update(
-        _id: @_id
-      ,
-        $set:
-          contents: v
-          editable: false
-      )
+      if canModifyWidget @
+        v = ui.$('textarea').val()
+        Widgets.update(
+          _id: @_id
+        ,
+          $set:
+            contents: v
+            editable: false
+        )
 
   Template.widget.rendered = ->
     onDragOrStop = (event, ui) =>
