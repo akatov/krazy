@@ -110,3 +110,25 @@ a {
 a:hover {
   color: red;
 }
+
+.widget-votes {
+  margin-top: 5px;
+}
+
+.vote-option {
+  height: 25px;
+  overflow: hidden;
+
+  .vote-option-name {
+    width: 40px;
+    float: left;
+  }
+
+  .voters {
+    float: left;
+
+    .voter {
+      margin-left: 5px;
+    }
+  }
+}
