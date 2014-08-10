@@ -12,22 +12,68 @@ if Meteor.isClient
     Widgets.find()
 
   Template.board.events
-    'keypress #magicBar': (event) ->
-      t = $(event.target)
-      if event.charCode == 13
-        value = t.val()
-        if value.length > 0
-          Widgets.insert
-            owner: Meteor.user()
-            contents: value
-            position:
-              x: position
-              y: position
-            votes:
-              yes: []
-              no: []
-          position += 50
-          t.val('')
+    'click #newWidget': (event) ->
+      Widgets.insert
+        owner: Meteor.user()
+        contents: ''
+        position:
+          x: position
+          y: position
+        votes:
+          Yes:[]
+          No:[]
+        templateId: 1
+        editable: true
+      position += 50
+
+  votingTemplates = [
+    id:0,
+    name:"Ok", 
+    opts: ["Ok"], 
+    clss:["positive"]
+  ,
+    id:1,
+    name:"Yes/No", 
+    opts:["Yes","No"], 
+    clss:["positive","negative"]
+  ,
+    id:2,
+    name:"+/-/0", 
+    opts:["Like","Dislike","Whatev"], 
+    clss:["positive","negative","neutral"]
+  ]
+
+  mapify = (array) ->
+    _.object(_.map(array,(x)->[x.id,x]))
+
+  votingTemplatesMap = mapify(votingTemplates)
+
+  Template.widget.votingTemplates = -> 
+    temps = _.map(votingTemplates, _.clone)
+    for t in temps
+      t.current = (t.id == @templateId)
+    temps
+
+  Template.widget.hasVotes = ->
+    for k,v of @votes
+      if v.length 
+        return true
+    return false
+
+  Template.widget.votesArray = ->
+    uid = Meteor.user()._id
+    votesArray = []
+    temp = votingTemplatesMap[@templateId]
+    for pair in _.zip(temp.opts,temp.clss)
+      opt = pair[0]
+      votesArray.push
+        option:     opt
+        votes:      @votes[opt] || []
+        klass:      pair[1]
+        widget:     @_id
+        opts:       temp.opts
+        userVote:   (uid in _.map(@votes[opt],(x)->x._id))      
+    return votesArray 
 
   Template.widget.style = ->
     "left: #{ @position.x }px; top: #{ @position.y }px;"
@@ -36,22 +82,37 @@ if Meteor.isClient
     'click .delete': ->
       Widgets.remove @_id
 
-    'click .yes': ->
+    'click .vote': (event)->
+      v = $(event.target).attr("name")
       u = Meteor.user()
+      
+      newVote = {}
+      newVote["votes."+v] = u
+      
+      otherVotes = {}
+      for opt in @opts
+        if opt!=v 
+          otherVotes["votes."+opt] = 
+            _id : u._id
+
       Widgets.update(
-        _id: @_id
+        _id: @widget
       ,
-        $pull: 'votes.no': _id: u._id
-        $addToSet: 'votes.yes': u
+        $pull: otherVotes
+        $addToSet: newVote
       )
 
-    'click .no': ->
+    'click .unvote': (event)->
+      v = $(event.target).attr("name")
       u = Meteor.user()
+
+      prevVote = {} 
+      prevVote["votes."+v] = 
+        _id : u._uid
       Widgets.update(
-        _id: @_id
+        _id: @widget
       ,
-        $pull: 'votes.yes': _id: u._id
-        $addToSet: 'votes.no': u
+        $pull: prevVote
       )
 
     'dblclick .widget-header': ->
@@ -60,6 +121,26 @@ if Meteor.isClient
       ,
         $set: editable: !@editable
       )
+      trySetFocus()
+
+    # little helper for debugging purpose
+    'click .widget-header': (event)->
+      console.log("Logging Widget Data For Debugging (window.W)")
+      console.log(@)
+      window.W = @
+
+    'change #votingTemplateSelector': (event)->
+      tempId = $(event.target).val()
+      emptyVotes = {}
+      for opt in votingTemplatesMap[tempId].opts
+        emptyVotes[opt] = []
+      Widgets.update(
+        _id: @_id
+      ,
+        $set:
+          templateId: tempId
+          votes: emptyVotes
+      )    
 
     'click .save': (event, ui) ->
       v = ui.$('textarea').val()
@@ -81,6 +162,15 @@ if Meteor.isClient
       cancel: '.widget-header button'
       drag: onDragOrStop
       stop: onDragOrStop
+
+    $("#widgetContentsEditor").focus()
+
+
+  trySetFocus = -> 
+    # TODO: make this fucking work...
+    console.log('trying $("#widgetContentsEditor").focus()')
+    $("#widgetContentsEditor").focus()
+
 
 if Meteor.isServer
 
