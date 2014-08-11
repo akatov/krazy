@@ -67,13 +67,7 @@ if Meteor.isClient
   isNewWidget = (w) ->
     uid = Meteor.userId()
     return false if uid == w.owner._id
-    hasVoted = false
-    for __, arr in w.votes
-      arr.forEach (voter) ->
-        if voter._id == uid
-          hasVoted = true
-      break if hasVoted
-    !hasVoted
+    _.all w.votes, (v, k) -> k != uid
 
   Template.widget.canEdit = ->
     canModifyWidget @

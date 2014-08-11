@@ -56,7 +56,7 @@ $basecolor: #AD141E;
 .widget {
   min-width: 300px;
   position: absolute;
-  border: 1px black solid;
+  border: 2px black solid;
   padding: 5px;
   @include border-radius(10px);
 }
