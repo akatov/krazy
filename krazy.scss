@@ -54,11 +54,15 @@ $basecolor: #AD141E;
 }
 
 .widget {
-  min-width: 100px;
+  min-width: 300px;
   position: absolute;
-  border: 1px black solid;
+  border: 2px black solid;
   padding: 5px;
   @include border-radius(10px);
+}
+
+.widgetContentsEditor {
+  min-width: 300px;
 }
 
 .widget.new {
@@ -68,6 +72,17 @@ $basecolor: #AD141E;
 .widget-header {
   background-color: gray;
   text-align: right;
+
+  img {
+    vertical-align: top;
+    margin: 3px;
+    height: 20px;
+    width: 20px;
+  }
+
+  button.save { 
+    float:left;
+  }
 }
 
 .hidden {
@@ -109,24 +124,55 @@ a:hover {
   color: red;
 }
 
-.widget-votes {
-  margin-top: 5px;
-}
+.widget-votes ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  li {
 
-.vote-option {
-  height: 25px;
-  overflow: hidden;
+    background-color:rgb(245,245,245);
+    .vote-line {
+      display: block;
+      height:21px;
+    }
 
-  .vote-option-name {
-    width: 40px;
-    float: left;
-  }
+    button.vote {
 
-  .voters {
-    float: left;
+      background-color:rgb(240,240,240);
+      vertical-align: top;
+      width:70px;
+      height:20px;
+      padding: 0;
+      margin: 0;
 
-    .voter {
+      &.positive {
+        color:green;
+      }
+      &.negative {
+        color:red;
+      }
+      &.neutral {
+        color:orange;
+      }
+    }
+
+    img.voter {
+      padding: 0;
       margin-left: 5px;
+      height: 20px;
+      width: 20px;
+      vertical-align: top;
+
+      &.me {
+        @include border-radius(5px);
+        cursor: pointer;
+
+        &:hover {
+          border: 2px red solid;
+          width: 16px;
+          height: 16px;
+        }
+      }
     }
   }
 }

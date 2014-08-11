@@ -24,7 +24,7 @@ template(name="userbar")
 
 template(name="board")
   h1 My Board
-  input#magicBar(type="text" placeholder="type, friend")
+  button#newWidget new widget
   #board
     each widgets
       +widget
@@ -32,28 +32,31 @@ template(name="board")
 template(name="widget")
   div(class=classes style=style)
     .widget-header
-      img(src=owner.profile.avatar width="20" height="20")
-      if canEdit
-        button.delete X
-    if editable
+      if isEditingWidget
+        button.save Save
+      img(src=owner.profile.avatar)
+      button.delete X
+    if isEditingWidget
       .widget-body
-        textarea
-          = contents
-        if canEdit
-          button.save Save
+        +widgetContentsEditor(contents=contents)
+        unless hasVotes
+          .votingTemplateSelector
+            span Desired Feedback:
+            each votingTemplates
+              button.votingTemplate(value=_id)
+                = name
     else
       .widget-body
         = contents
     .widget-votes
-      .vote-option
-        .vote-option-name
-          a.yes Yes:
-        .voters
-          each votes.yes
-            img.voter(src=profile.avatar width="20" height="20")
-      .vote-option
-        .vote-option-name
-          a.no No:
-        .voters
-          each votes.no
-            img.voter(src=profile.avatar width="20" height="20")
+      ul
+        each voteLines
+          li.vote-line
+            button.vote(name=name)
+              = name
+            each voters
+              img.voter(class=klass src=avatar title=name)
+
+template(name="widgetContentsEditor")
+  textarea.widgetContentsEditor
+    = contents
