@@ -34,9 +34,9 @@ if Meteor.isClient
 
   Template.widget.voteLines = ->
     me_id = Meteor.userId()
-    ret = _.map @voteOptions, (s) => {
+    _.map @voteOptions, (s) => {
       name: s
-      voters: _(@votes)
+      voters: _.chain(@votes)
         .pairs()
         .filter((kv) -> kv[1] == s)
         .map((kv) ->
@@ -48,8 +48,9 @@ if Meteor.isClient
             klass: if me_id == u._id then 'me' else ''
           }
         )
+        .sortBy((u) -> u._id != me_id) # false comes before true
+        .value()
     }
-    ret
 
   Template.widget.hasVotes = ->
     _.any @votes, (v) -> v.length > 0
