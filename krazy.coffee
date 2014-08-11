@@ -2,6 +2,8 @@ root = exports ? @
 
 root.Widgets = new Meteor.Collection 'widgets'
 
+root.VotingTemplates = new Meteor.Collection 'votingTemplates'
+
 if Meteor.isClient
 
   # for positioning of new widgets
@@ -12,68 +14,25 @@ if Meteor.isClient
     Widgets.find()
 
   Template.board.events
-    'click #newWidget': (event) ->
+    'click #newWidget': ->
       Widgets.insert
         owner: Meteor.user()
         contents: ''
         position:
           x: position
           y: position
-        votes:
-          Yes:[]
-          No:[]
-        templateId: 1
+        votes: {}
         editable: true
       position += 50
 
-  votingTemplates = [
-    id:0,
-    name:"Ok", 
-    opts: ["Ok"], 
-    clss:["positive"]
-  ,
-    id:1,
-    name:"Yes/No", 
-    opts:["Yes","No"], 
-    clss:["positive","negative"]
-  ,
-    id:2,
-    name:"+/-/0", 
-    opts:["Like","Dislike","Whatev"], 
-    clss:["positive","negative","neutral"]
-  ]
+  UI.registerHelper 'arraify', (o) ->
+    _.map o, (v, k) -> {key: k, value: v}
 
-  mapify = (array) ->
-    _.object(_.map(array,(x)->[x.id,x]))
-
-  votingTemplatesMap = mapify(votingTemplates)
-
-  Template.widget.votingTemplates = -> 
-    temps = _.map(votingTemplates, _.clone)
-    for t in temps
-      t.current = (t.id == @templateId)
-    temps
+  Template.widget.votingTemplates = ->
+    VotingTemplates.find()
 
   Template.widget.hasVotes = ->
-    for k,v of @votes
-      if v.length 
-        return true
-    return false
-
-  Template.widget.votesArray = ->
-    uid = Meteor.user()._id
-    votesArray = []
-    temp = votingTemplatesMap[@templateId]
-    for pair in _.zip(temp.opts,temp.clss)
-      opt = pair[0]
-      votesArray.push
-        option:     opt
-        votes:      @votes[opt] || []
-        klass:      pair[1]
-        widget:     @_id
-        opts:       temp.opts
-        userVote:   (uid in _.map(@votes[opt],(x)->x._id))      
-    return votesArray 
+    _.any @votes, (v) -> v.length > 0
 
   numVotesForWidget = (w) ->
     numVotes = 0
@@ -113,53 +72,54 @@ if Meteor.isClient
   Template.widget.isEditingWidget = ->
     @editable && canModifyWidget @
 
-  Template.widget.events
-    'click .delete': ->
-      if canModifyWidget @
-        Widgets.remove @_id
+  Template.widget.iAmVoter = ->
+    Meteor.userId() == @_id
 
-    'click .vote': (event)->
-      return unless canVoteOnWidget @
+  Template.widget.events
+    'click .delete': (eventt, ui) ->
+      widget = ui.data
+      if canModifyWidget widget
+        Widgets.remove widget._id
+
+    'click .vote': (event, ui)->
+      widget = ui.data
+      return unless canVoteOnWidget widget
 
       v = $(event.target).attr("name")
       u = Meteor.user()
       
       newVote = {}
-      newVote["votes."+v] = u
+      newVote["votes.#{ v }"] = u
       
-      otherVotes = {}
-      for opt in @opts
-        if opt!=v 
-          otherVotes["votes."+opt] = 
-            _id : u._id
-
       Widgets.update(
-        _id: @widget
+        _id: widget._id
       ,
-        $pull: otherVotes
         $addToSet: newVote
       )
 
-    'click .unvote': (event)->
-      return unless canVoteOnWidget @
+    'click .unvote': (event, ui)->
+      widget = ui.data
+      return unless canVoteOnWidget widget
 
       v = $(event.target).attr("name")
-      u = Meteor.user()
+      uid = Meteor.userId()
 
-      prevVote = {} 
-      prevVote["votes."+v] = 
-        _id : u._uid
+      prevVotes = {}
+      _.forEach widget.votes, (v, n) ->
+        prevVotes["votes.#{ n }"] = 
+          _id : uid
       Widgets.update(
-        _id: @widget
+        _id: widget._id
       ,
-        $pull: prevVote
+        $pull: prevVotes
       )
 
-    'dblclick .widget-header': ->
-      return unless canModifyWidget @
+    'dblclick .widget-header': (event, ui) ->
+      widget = ui.data
+      return unless canModifyWidget widget
 
       Widgets.update(
-        _id: @_id
+        _id: widget._id
       ,
         $set: editable: !@editable
       )
@@ -171,24 +131,26 @@ if Meteor.isClient
       console.log(@)
       window.W = @
 
-    'change #votingTemplateSelector': (event)->
+    'change #votingTemplateSelector': (event, ui) ->
+      widget = ui.data
       tempId = $(event.target).val()
-      emptyVotes = {}
-      for opt in votingTemplatesMap[tempId].opts
-        emptyVotes[opt] = []
+      return unless tempId
+      t = VotingTemplates.findOne(tempId)
+      r = {}
+      _.each(t.opts, (v) -> r[v] = [])
       Widgets.update(
-        _id: @_id
+        _id: widget._id
       ,
         $set:
-          templateId: tempId
-          votes: emptyVotes
-      )    
+          votes: r
+      )
 
     'click .save': (event, ui) ->
-      if canModifyWidget @
+      widget = ui.data
+      if canModifyWidget widget
         v = ui.$('textarea').val()
         Widgets.update(
-          _id: @_id
+          _id: widget._id
         ,
           $set:
             contents: v
@@ -228,3 +190,20 @@ if Meteor.isServer
 
     # always clean Widgets collection at startup for now
     Widgets.remove _id: $exists: true
+
+    if VotingTemplates.find().count() == 0
+      _.forEach([
+        name: "OK"
+        opts: ["OK"]
+        clss: ["positive"]
+      ,
+        name: "Yes/No"
+        opts: ["Yes", "No"]
+        clss: ["positive","negative"]
+      ,
+        name: "+/-/0"
+        opts: ["Like", "Dislike", "Whatev"],
+        clss: ["positive", "negative", "neutral"]
+      ], (t) ->
+        VotingTemplates.insert t
+      )

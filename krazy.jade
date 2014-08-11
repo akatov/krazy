@@ -44,20 +44,21 @@ template(name="widget")
           div
             span Desired Feedback:
             select#votingTemplateSelector
+              option
               each votingTemplates
-                option(value=id,selected=current) 
+                option(value=_id)
                   = name
     else
       .widget-body
         = contents
     .widget-votes
-      ul 
-        each votesArray
-          li 
+      ul
+        each arraify votes
+          li
             .vote-line
-              button.vote(name=option,class=klass)
-                = option
-              each votes
+              button.vote(name=key)
+                = key
+              each value
                 img.voter(src=profile.avatar)
-              if userVote
-                button.unvote(name=option) X
+                if iAmVoter this
+                  button.unvote(name=key) X
