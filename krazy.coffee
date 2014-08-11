@@ -75,14 +75,52 @@ if Meteor.isClient
         userVote:   (uid in _.map(@votes[opt],(x)->x._id))      
     return votesArray 
 
+  numVotesForWidget = (w) ->
+    numVotes = 0
+    for __, arr in w.votes
+      numVotes += arr.length
+    numVotes
+
+  canModifyWidget = (w) ->
+    w.owner._id == Meteor.userId() && numVotesForWidget(w) == 0
+
+  canVoteOnWidget = (w) ->
+    !w.editable
+
+  isNewWidget = (w) ->
+    uid = Meteor.userId()
+    return false if uid == w.owner._id
+    hasVoted = false
+    for __, arr in w.votes
+      arr.forEach (voter) ->
+        if voter._id == uid
+          hasVoted = true
+      break if hasVoted
+    !hasVoted
+
+  Template.widget.canEdit = ->
+    canModifyWidget @
+
   Template.widget.style = ->
     "left: #{ @position.x }px; top: #{ @position.y }px;"
 
+  Template.widget.classes = ->
+    if isNewWidget @
+      'widget new'
+    else
+      'widget'
+
+  Template.widget.isEditingWidget = ->
+    @editable && canModifyWidget @
+
   Template.widget.events
     'click .delete': ->
-      Widgets.remove @_id
+      if canModifyWidget @
+        Widgets.remove @_id
 
     'click .vote': (event)->
+      return unless canVoteOnWidget @
+
       v = $(event.target).attr("name")
       u = Meteor.user()
       
@@ -103,6 +141,8 @@ if Meteor.isClient
       )
 
     'click .unvote': (event)->
+      return unless canVoteOnWidget @
+
       v = $(event.target).attr("name")
       u = Meteor.user()
 
@@ -116,6 +156,8 @@ if Meteor.isClient
       )
 
     'dblclick .widget-header': ->
+      return unless canModifyWidget @
+
       Widgets.update(
         _id: @_id
       ,
@@ -143,14 +185,15 @@ if Meteor.isClient
       )    
 
     'click .save': (event, ui) ->
-      v = ui.$('textarea').val()
-      Widgets.update(
-        _id: @_id
-      ,
-        $set:
-          contents: v
-          editable: false
-      )
+      if canModifyWidget @
+        v = ui.$('textarea').val()
+        Widgets.update(
+          _id: @_id
+        ,
+          $set:
+            contents: v
+            editable: false
+        )
 
   Template.widget.rendered = ->
     onDragOrStop = (event, ui) =>

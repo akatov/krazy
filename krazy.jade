@@ -6,41 +6,38 @@ body
 
 template(name='application')
 
-  #topbar.navbar.navbar-default.navbar-fixed-top(role="navigation")
-    .container
-      ul.nav.navbar-nav.navbar-left
-        a.navbar-brand krazy.io
-
-  #userbar
-    if currentUser
-      +with currentUser
-        +userbar
-    +loginButtons
+  #topbar
+    #logo
+    #brand krazy.io
+    #userbar
+      if currentUser
+        +with currentUser
+          +userbar
+      +loginButtons
 
   #main
     if currentUser
       +board
 
 template(name="userbar")
-  img(src=profile.avatar width="30" height="30")
+  img(src=profile.avatar width="32" height="32" style="vertical-align: bottom")
 
 template(name="board")
   h1 My Board
-  //input#magicBar(type="text" placeholder="type, friend")
   button#newWidget new widget
   #board
     each widgets
       +widget
 
 template(name="widget")
-  .widget(style=style)
+  div(class=classes style=style)
     .widget-header
-      if editable
+      if isEditingWidget
         button.save Save
       img(src=owner.profile.avatar)
       button.delete X
-    if editable
-      div.widget-body
+    if isEditingWidget
+      .widget-body
         textarea#widgetContentsEditor
           = contents
         unless hasVotes
@@ -51,9 +48,9 @@ template(name="widget")
                 option(value=id,selected=current) 
                   = name
     else
-      div.widget-body
+      .widget-body
         = contents
-    div.widget-votes
+    .widget-votes
       ul 
         each votesArray
           li 
@@ -61,6 +58,6 @@ template(name="widget")
               button.vote(name=option,class=klass)
                 = option
               each votes
-                img(src=profile.avatar)
+                img.voter(src=profile.avatar)
               if userVote
                 button.unvote(name=option) X
