@@ -130,7 +130,7 @@ if Meteor.isClient
       console.log(@)
       window.W = @
 
-    'change .votingTemplateSelector': (event, ui) ->
+    'click .votingTemplate': (event, ui) ->
       widget = ui.data
       tempId = $(event.target).val()
       return unless tempId

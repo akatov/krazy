@@ -40,13 +40,11 @@ template(name="widget")
       .widget-body
         +widgetContentsEditor(contents=contents)
         unless hasVotes
-          div
+          .votingTemplateSelector
             span Desired Feedback:
-            select.votingTemplateSelector
-              option
-              each votingTemplates
-                option(value=_id)
-                  = name
+            each votingTemplates
+              button.votingTemplate(value=_id)
+                = name
     else
       .widget-body
         = contents
