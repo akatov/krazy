@@ -33,6 +33,7 @@ if Meteor.isClient
     VotingTemplates.find()
 
   Template.widget.voteLines = ->
+    me_id = Meteor.userId()
     ret = _.map @voteOptions, (s) => {
       name: s
       voters: _(@votes)
@@ -44,6 +45,7 @@ if Meteor.isClient
             _id: u._id
             name: u.profile.name
             avatar: u.profile.avatar
+            klass: if me_id == u._id then 'me' else ''
           }
         )
     }
@@ -106,7 +108,8 @@ if Meteor.isClient
         $set: _.object([["votes.#{uid}", v]])
       )
 
-    'click .unvote': (event, ui)->
+    'click .voter.me': (event, ui)->
+      debugger
       widget = ui.data
       return unless canVoteOnWidget widget
 

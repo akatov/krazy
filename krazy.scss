@@ -162,6 +162,17 @@ a:hover {
       height: 20px;
       width: 20px;
       vertical-align: top;
+
+      &.me {
+        @include border-radius(5px);
+        cursor: pointer;
+
+        &:hover {
+          border: 2px red solid;
+          width: 16px;
+          height: 16px;
+        }
+      }
     }
   }
 }

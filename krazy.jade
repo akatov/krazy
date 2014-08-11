@@ -55,9 +55,7 @@ template(name="widget")
             button.vote(name=name)
               = name
             each voters
-              img.voter(src=avatar title=name)
-              if iAmVoter this
-                button.unvote(name=key) X
+              img.voter(class=klass src=avatar title=name)
 
 template(name="widgetContentsEditor")
   textarea.widgetContentsEditor
