@@ -123,7 +123,6 @@ if Meteor.isClient
       ,
         $set: editable: !@editable
       )
-      trySetFocus()
 
     # little helper for debugging purpose
     'click .widget-header': (event)->
@@ -170,12 +169,8 @@ if Meteor.isClient
 
     $("#widgetContentsEditor").focus()
 
-
-  trySetFocus = -> 
-    # TODO: make this fucking work...
-    console.log('trying $("#widgetContentsEditor").focus()')
-    $("#widgetContentsEditor").focus()
-
+  Template.widgetContentsEditor.rendered = ->
+    $('.widgetContentsEditor').focus()
 
 if Meteor.isServer
 

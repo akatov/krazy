@@ -38,8 +38,7 @@ template(name="widget")
       button.delete X
     if isEditingWidget
       .widget-body
-        textarea#widgetContentsEditor
-          = contents
+        +widgetContentsEditor(contents=contents)
         unless hasVotes
           div
             span Desired Feedback:
@@ -62,3 +61,7 @@ template(name="widget")
                 img.voter(src=profile.avatar)
                 if iAmVoter this
                   button.unvote(name=key) X
+
+template(name="widgetContentsEditor")
+  textarea.widgetContentsEditor
+    = contents
