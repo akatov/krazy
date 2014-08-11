@@ -50,15 +50,14 @@ template(name="widget")
         = contents
     .widget-votes
       ul
-        each arraify votes
-          li
-            .vote-line
-              button.vote(name=key)
-                = key
-              each value
-                img.voter(src=profile.avatar)
-                if iAmVoter this
-                  button.unvote(name=key) X
+        each voteLines
+          li.vote-line
+            button.vote(name=name)
+              = name
+            each voters
+              img.voter(src=avatar title=name)
+              if iAmVoter this
+                button.unvote(name=key) X
 
 template(name="widgetContentsEditor")
   textarea.widgetContentsEditor
