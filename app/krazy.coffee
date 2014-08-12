@@ -110,7 +110,6 @@ if Meteor.isClient
       )
 
     'click .voter.me': (event, ui)->
-      debugger
       widget = ui.data
       return unless canVoteOnWidget widget
 
