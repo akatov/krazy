@@ -2,6 +2,7 @@
   "packages": {
     "jade": {},
     "scss": {},
-    "jqueryui": {}
+    "jqueryui": {},
+    "iron-router": {}
   }
 }
