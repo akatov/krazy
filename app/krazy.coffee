@@ -1,7 +1,3 @@
-root = exports ? @
-
-root.VotingTemplates = new Meteor.Collection 'votingTemplates'
-
 if Meteor.isClient
 
   # for positioning of new widgets
@@ -189,20 +185,3 @@ if Meteor.isServer
         opts.profile.avatar = avatar
         user.profile = opts.profile
       user
-
-    if VotingTemplates.find().count() == 0
-      _.forEach([
-        name: "OK"
-        opts: ["OK"]
-        clss: ["positive"]
-      ,
-        name: "Yes/No"
-        opts: ["Yes", "No"]
-        clss: ["positive","negative"]
-      ,
-        name: "+/-/0"
-        opts: ["Like", "Dislike", "Whatev"],
-        clss: ["positive", "negative", "neutral"]
-      ], (t) ->
-        VotingTemplates.insert t
-      )
