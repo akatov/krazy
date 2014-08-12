@@ -1,7 +1,5 @@
 root = exports ? @
 
-root.Widgets = new Meteor.Collection 'widgets'
-
 root.VotingTemplates = new Meteor.Collection 'votingTemplates'
 
 if Meteor.isClient
@@ -191,9 +189,6 @@ if Meteor.isServer
         opts.profile.avatar = avatar
         user.profile = opts.profile
       user
-
-    # always clean Widgets collection at startup for now
-    Widgets.remove _id: $exists: true
 
     if VotingTemplates.find().count() == 0
       _.forEach([
