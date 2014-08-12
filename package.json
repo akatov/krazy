@@ -1,0 +1,23 @@
+{
+  "name": "krazy",
+  "version": "0.0.0",
+  "description": "productivity app by BlueMath",
+  "scripts": {
+    "test": "rtd runOnce --debug",
+    "start": "cd app && mrt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/akatov/krazy.git"
+  },
+  "keywords": [
+    "krazy",
+    "8"
+  ],
+  "author": "BlueMath",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/akatov/krazy/issues"
+  },
+  "homepage": "https://github.com/akatov/krazy"
+}
