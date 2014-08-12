@@ -185,7 +185,10 @@ if Meteor.isServer
     # use facebook picture as avatar
     Accounts.onCreateUser (opts, user) ->
       if opts.profile
-        opts.profile.avatar = "http://graph.facebook.com/#{ user.services.facebook.id }/picture/?type=square"
+        avatar = 'http://graph.facebook.com/'
+        avatar += user.services.facebook.id
+        avatar += '/picture/?type=square'
+        opts.profile.avatar = avatar
         user.profile = opts.profile
       user
 
