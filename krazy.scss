@@ -1,0 +1,178 @@
+html, body {
+  margin: 0px;
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+/* base color used in topbar */
+$basecolor: #AD141E;
+
+#topbar {
+  background: $basecolor;
+  margin: 10px;
+  @include border-radius(10px);
+  overflow: hidden;
+  display: block;
+
+  #logo {
+    float: left;
+    border: 0;
+    margin: 10px;
+	  background: url(8ball.png) no-repeat center;
+	  background-size: 40px 40px;
+	  width: 40px;
+	  height: 40px;
+  }
+
+  #brand {
+    margin: 10px;
+    float: left;
+    color: lighten($basecolor,50%) !important;
+    font-size: 200%;
+    font-variant: small-caps;
+  }
+
+  #userbar {
+    margin: 10px;
+    float: right;
+
+    .login-display-name {
+      color: lighten($basecolor,50%) !important;
+    }
+  }
+}
+
+#main {
+  margin: 10px;
+  position: absolute;
+  top:54px;
+}
+
+.widget {
+  min-width: 300px;
+  position: absolute;
+  border: 2px black solid;
+  padding: 5px;
+  @include border-radius(10px);
+}
+
+.widgetContentsEditor {
+  min-width: 300px;
+}
+
+.widget.new {
+  border: 2px red solid;
+}
+
+.widget-header {
+  background-color: gray;
+  text-align: right;
+
+  img {
+    vertical-align: top;
+    margin: 3px;
+    height: 20px;
+    width: 20px;
+  }
+
+  button.save { 
+    float:left;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.link {
+  position: absolute;
+  border: 1px black solid;
+  -webkit-transform-origin: 0 0;
+}
+
+.avatar {
+
+  &.small {
+    width: 20px;
+    height: 20px;
+  }
+
+  &.large {
+    width: 44px;
+    height: 44px;
+    margin: 5px;
+  }
+
+}
+
+#board {
+  position: absolute;
+}
+
+
+a {
+  color: blue;
+  cursor: pointer;
+}
+
+a:hover {
+  color: red;
+}
+
+.widget-votes ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  li {
+
+    background-color:rgb(245,245,245);
+    .vote-line {
+      display: block;
+      height:21px;
+    }
+
+    button.vote {
+
+      background-color:rgb(240,240,240);
+      vertical-align: top;
+      width:70px;
+      height:20px;
+      padding: 0;
+      margin: 0;
+
+      &.positive {
+        color:green;
+      }
+      &.negative {
+        color:red;
+      }
+      &.neutral {
+        color:orange;
+      }
+    }
+
+    img.voter {
+      padding: 0;
+      margin-left: 5px;
+      height: 20px;
+      width: 20px;
+      vertical-align: top;
+
+      &.me {
+        @include border-radius(5px);
+        cursor: pointer;
+
+        &:hover {
+          border: 2px red solid;
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+}

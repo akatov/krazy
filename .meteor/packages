@@ -6,3 +6,9 @@
 standard-app-packages
 autopublish
 insecure
+coffeescript
+jade
+scss
+jqueryui
+accounts-facebook
+accounts-ui
