@@ -2,10 +2,6 @@
 # TODO: use a better layout algorithm
 position = 0
 
-Template.Board.widgets = ->
-  Widgets.find()
-
-
 # Events
 
 Template.Board.events
