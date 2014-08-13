@@ -3,6 +3,7 @@
     "jade": {},
     "scss": {},
     "jqueryui": {},
-    "iron-router": {}
+    "iron-router": {},
+    "user-status": {}
   }
 }
