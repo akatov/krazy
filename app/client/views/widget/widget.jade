@@ -1,4 +1,4 @@
-template(name="widget")
+template(name="Widget")
   div(class=classes style=style)
     .widget-header
       if isEditingWidget
@@ -7,7 +7,7 @@ template(name="widget")
       button.delete X
     if isEditingWidget
       .widget-body
-        +widgetContentsEditor(contents=contents)
+        +WidgetContentsEditor(contents=contents)
         unless hasVotes
           .votingTemplateSelector
             span Desired Feedback:
@@ -26,6 +26,6 @@ template(name="widget")
             each voters
               img.voter(class=klass src=avatar title=name)
 
-template(name="widgetContentsEditor")
+template(name="WidgetContentsEditor")
   textarea.widgetContentsEditor
     = contents

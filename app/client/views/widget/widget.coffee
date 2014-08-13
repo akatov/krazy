@@ -20,10 +20,10 @@ isNewWidget = (w) ->
 
 # Template Variables
 
-Template.widget.votingTemplates = ->
+Template.Widget.votingTemplates = ->
   VotingTemplates.find()
 
-Template.widget.voteLines = ->
+Template.Widget.voteLines = ->
   me_id = Meteor.userId()
   _.map @voteOptions, (s) => {
     name: s
@@ -43,31 +43,31 @@ Template.widget.voteLines = ->
       .value()
   }
 
-Template.widget.hasVotes = ->
+Template.Widget.hasVotes = ->
   _.any @votes, (v) -> v.length > 0
 
-Template.widget.canEdit = ->
+Template.Widget.canEdit = ->
   canModifyWidget @
 
-Template.widget.style = ->
+Template.Widget.style = ->
   "left: #{ @position.x }px; top: #{ @position.y }px;"
 
-Template.widget.classes = ->
+Template.Widget.classes = ->
   if isNewWidget @
     'widget new'
   else
     'widget'
 
-Template.widget.isEditingWidget = ->
+Template.Widget.isEditingWidget = ->
   @editable && canModifyWidget @
 
-Template.widget.iAmVoter = ->
+Template.Widget.iAmVoter = ->
   Meteor.userId() == @_id
 
 
 # Events
 
-Template.widget.events
+Template.Widget.events
 
   'click .delete': (eventt, ui) ->
     widget = ui.data
@@ -142,7 +142,7 @@ Template.widget.events
 
 # Helpers
 
-Template.widget.helpers
+Template.Widget.helpers
 # Example:
 #   items: ->
 #
@@ -150,9 +150,9 @@ Template.widget.helpers
 
 # Widget: Lifecycle Hooks
 
-Template.widget.created = ->
+Template.Widget.created = ->
 
-Template.widget.rendered = ->
+Template.Widget.rendered = ->
 
   onDragOrStop = (event, ui) =>
     p = ui.position
@@ -166,10 +166,10 @@ Template.widget.rendered = ->
 
   $("#widgetContentsEditor").focus()
 
-Template.widget.destroyed = ->
+Template.Widget.destroyed = ->
 
 
   # widgetContentsEditor
 
-Template.widgetContentsEditor.rendered = ->
+Template.WidgetContentsEditor.rendered = ->
   $('.widgetContentsEditor').focus()

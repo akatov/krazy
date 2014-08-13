@@ -1,4 +1,4 @@
-template(name='home')
+template(name='Home')
 
   #topbar
     #logo
@@ -6,12 +6,12 @@ template(name='home')
     #userbar
       if currentUser
         +with currentUser
-          +userbar
+          +Userbar
       +loginButtons
 
   #main
     if currentUser
       +Board
 
-template(name="userbar")
+template(name="Userbar")
   img(src=profile.avatar width="32" height="32" style="vertical-align: bottom")
