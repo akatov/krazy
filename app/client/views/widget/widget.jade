@@ -1,0 +1,31 @@
+template(name="widget")
+  div(class=classes style=style)
+    .widget-header
+      if isEditingWidget
+        button.save Save
+      img(src=owner.profile.avatar)
+      button.delete X
+    if isEditingWidget
+      .widget-body
+        +widgetContentsEditor(contents=contents)
+        unless hasVotes
+          .votingTemplateSelector
+            span Desired Feedback:
+            each votingTemplates
+              button.votingTemplate(value=_id)
+                = name
+    else
+      .widget-body
+        = contents
+    .widget-votes
+      ul
+        each voteLines
+          li.vote-line
+            button.vote(name=name)
+              = name
+            each voters
+              img.voter(class=klass src=avatar title=name)
+
+template(name="widgetContentsEditor")
+  textarea.widgetContentsEditor
+    = contents
