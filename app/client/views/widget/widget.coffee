@@ -18,51 +18,47 @@ isNewWidget = (w) ->
   _.all w.votes, (v, k) -> k != uid
 
 
-# Template Variables
+# Helpers
 
-Template.Widget.votingTemplates = ->
-  VotingTemplates.find()
+Template.Widget.helpers
 
-Template.Widget.voteLines = ->
-  me_id = Meteor.userId()
-  _.map @voteOptions, (s) => {
-    name: s
-    voters: _.chain(@votes)
-      .pairs()
-      .filter((kv) -> kv[1] == s)
-      .map((kv) ->
-        u = Meteor.users.findOne(kv[0])
-        {
-          _id: u._id
-          name: u.profile.name
-          avatar: u.profile.avatar
-          klass: if me_id == u._id then 'me' else ''
-        }
-      )
-      .sortBy((u) -> u._id != me_id) # false comes before true
-      .value()
-  }
+  votingTemplates: ->
+    VotingTemplates.find()
 
-Template.Widget.hasVotes = ->
-  _.any @votes, (v) -> v.length > 0
+  voteLines: ->
+    me_id = Meteor.userId()
+    _.map @voteOptions, (s) => {
+      name: s
+      voters: _.chain(@votes)
+        .pairs()
+        .filter((kv) -> kv[1] == s)
+        .map((kv) ->
+          u = Meteor.users.findOne(kv[0])
+          {
+            _id: u._id
+            name: u.profile.name
+            avatar: u.profile.avatar
+            klass: if me_id == u._id then 'me' else ''
+          }
+        )
+        .sortBy((u) -> u._id != me_id) # false comes before true
+        .value()
+    }
 
-Template.Widget.canEdit = ->
-  canModifyWidget @
+  hasVotes: ->
+    _.any @votes, (v) -> v.length > 0
 
-Template.Widget.style = ->
-  "left: #{ @position.x }px; top: #{ @position.y }px;"
+  isEditingWidget: ->
+    @editable && canModifyWidget @
 
-Template.Widget.classes = ->
-  if isNewWidget @
-    'widget new'
-  else
-    'widget'
+  style: ->
+    "left: #{ @position.x }px; top: #{ @position.y }px;"
 
-Template.Widget.isEditingWidget = ->
-  @editable && canModifyWidget @
-
-Template.Widget.iAmVoter = ->
-  Meteor.userId() == @_id
+  classes: ->
+    if isNewWidget @
+      'widget new'
+    else
+      'widget'
 
 
 # Events
@@ -132,14 +128,6 @@ Template.Widget.events
           contents: v
           editable: false
       )
-
-
-# Helpers
-
-Template.Widget.helpers
-# Example:
-#   items: ->
-#
 
 
 # Widget: Lifecycle Hooks
