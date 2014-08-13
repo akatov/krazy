@@ -23,6 +23,7 @@ $basecolor: #AD141E;
 	  background-size: 40px 40px;
 	  width: 40px;
 	  height: 40px;
+    cursor: pointer;
   }
 
   #brand {
@@ -31,6 +32,7 @@ $basecolor: #AD141E;
     color: lighten($basecolor,50%) !important;
     font-size: 200%;
     font-variant: small-caps;
+    cursor: pointer;
   }
 
   #userbar {

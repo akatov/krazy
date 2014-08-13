@@ -1,16 +1,19 @@
+# Events
 
-# MasterLayout: Event Handlers and Helpers
 Template.MasterLayout.events
-# Example:
-#  "click .selector": (e, tmpl) ->
-#
+  'click .action-go-home': (event, template) ->
+    Router.go 'index'
+    # use `event.stopImmediatePropagation()` if you want
+    # to capture this at a lower level
+
+
+# Helpers
 
 Template.MasterLayout.helpers
-# Example:
-#   items: ->
-#
 
-# MasterLayout: Lifecycle Hooks
+
+# Lifecycle Hooks
+
 Template.MasterLayout.created = ->
 
 Template.MasterLayout.rendered = ->
