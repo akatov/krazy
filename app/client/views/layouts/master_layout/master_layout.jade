@@ -1,0 +1,11 @@
+template(name='MasterLayout')
+  #topbar
+    #logo
+    #brand krazy.io
+    #userbar
+      if currentUser
+        +with currentUser
+          img(src=profile.avatar width="32" height="32" style="vertical-align: bottom")
+      +loginButtons
+  #main
+    +yield
