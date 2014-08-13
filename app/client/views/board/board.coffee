@@ -5,7 +5,7 @@ position = 0
 # Events
 
 Template.Board.events
-  'click #newWidget': ->
+  'click .action-new-widget': (event, template) ->
     Widgets.insert
       owner: Meteor.user()
       contents: ''

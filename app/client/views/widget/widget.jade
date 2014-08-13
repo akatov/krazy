@@ -1,18 +1,18 @@
 template(name="Widget")
   div(class=classes style=style)
-    .widget-header
+    .widget-header.action-edit
       if isEditingWidget
-        button.save Save
+        button.action-save Save
       img(src=owner.profile.avatar)
-      button.delete X
+      button.action-delete X
     if isEditingWidget
       .widget-body
         +WidgetContentsEditor(contents=contents)
         unless hasVotes
-          .votingTemplateSelector
+          .voting-template-selector
             span Desired Feedback:
             each votingTemplates
-              button.votingTemplate(value=_id)
+              button.action-select-template(value=_id)
                 = name
     else
       .widget-body
@@ -21,11 +21,11 @@ template(name="Widget")
       ul
         each voteLines
           li.vote-line
-            button.vote(name=name)
+            button.action-vote(name=name)
               = name
             each voters
               img.voter(class=klass src=avatar title=name)
 
 template(name="WidgetContentsEditor")
-  textarea.widgetContentsEditor
+  textarea.widget-contents-editor
     = contents

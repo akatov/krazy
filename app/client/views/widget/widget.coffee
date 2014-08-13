@@ -69,13 +69,13 @@ Template.Widget.iAmVoter = ->
 
 Template.Widget.events
 
-  'click .delete': (eventt, ui) ->
-    widget = ui.data
+  'click .action-delete': (event, template) ->
+    widget = template.data
     if canModifyWidget widget
       Widgets.remove widget._id
 
-  'click .vote': (event, ui)->
-    widget = ui.data
+  'click .action-vote': (event, template)->
+    widget = template.data
     return unless canVoteOnWidget widget
 
     v = $(event.target).attr("name")
@@ -87,8 +87,8 @@ Template.Widget.events
       $set: _.object([["votes.#{uid}", v]])
     )
 
-  'click .voter.me': (event, ui)->
-    widget = ui.data
+  'click .voter.me': (event, template)->
+    widget = template.data
     return unless canVoteOnWidget widget
 
     uid = Meteor.userId()
@@ -99,8 +99,8 @@ Template.Widget.events
       $unset: _.object([["votes.#{uid}", '']])
     )
 
-  'dblclick .widget-header': (event, ui) ->
-    widget = ui.data
+  'dblclick .action-edit': (event, template) ->
+    widget = template.data
     return unless canModifyWidget widget
 
     Widgets.update(
@@ -109,14 +109,8 @@ Template.Widget.events
       $set: editable: !@editable
     )
 
-  # little helper for debugging purpose
-  'click .widget-header': (event)->
-    console.log("Logging Widget Data For Debugging (window.W)")
-    console.log(@)
-    window.W = @
-
-  'click .votingTemplate': (event, ui) ->
-    widget = ui.data
+  'click .action-select-template': (event, template) ->
+    widget = template.data
     tempId = $(event.target).val()
     return unless tempId
     t = VotingTemplates.findOne(tempId)
@@ -127,10 +121,10 @@ Template.Widget.events
         voteOptions: t.opts
     )
 
-  'click .save': (event, ui) ->
-    widget = ui.data
+  'click .action-save': (event, template) ->
+    widget = template.data
     if canModifyWidget widget
-      v = ui.$('textarea').val()
+      v = template.$('textarea').val()
       Widgets.update(
         _id: widget._id
       ,
@@ -169,7 +163,7 @@ Template.Widget.rendered = ->
 Template.Widget.destroyed = ->
 
 
-  # widgetContentsEditor
+# WidgetContentsEditor
 
 Template.WidgetContentsEditor.rendered = ->
-  $('.widgetContentsEditor').focus()
+  @$('.widget-contents-editor').focus()
