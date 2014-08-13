@@ -1,4 +1,4 @@
-class @HomeController extends RouteController
+class @IndexController extends RouteController
   waitOn: ->
 
   data: ->
