@@ -11,14 +11,7 @@ template(name='home')
 
   #main
     if currentUser
-      +board
+      +Board
 
 template(name="userbar")
   img(src=profile.avatar width="32" height="32" style="vertical-align: bottom")
-
-template(name="board")
-  h1 My Board
-  button#newWidget new widget
-  #board
-    each widgets
-      +widget

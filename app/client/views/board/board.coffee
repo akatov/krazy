@@ -2,10 +2,13 @@
 # TODO: use a better layout algorithm
 position = 0
 
-Template.board.widgets = ->
+Template.Board.widgets = ->
   Widgets.find()
 
-Template.board.events
+
+# Events
+
+Template.Board.events
   'click #newWidget': ->
     Widgets.insert
       owner: Meteor.user()
@@ -17,3 +20,15 @@ Template.board.events
       votes: {}
       editable: true
     position += 50
+
+Template.Board.helpers
+# Example:
+#   items: ->
+#
+
+# Board: Lifecycle Hooks
+Template.Board.created = ->
+
+Template.Board.rendered = ->
+
+Template.Board.destroyed = ->
