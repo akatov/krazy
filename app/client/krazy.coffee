@@ -17,6 +17,3 @@ Template.board.events
       votes: {}
       editable: true
     position += 50
-
-UI.registerHelper 'arraify', (o) ->
-  _.map o, (v, k) -> {key: k, value: v}
