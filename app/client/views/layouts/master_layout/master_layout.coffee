@@ -10,6 +10,8 @@ Template.MasterLayout.events
 # Helpers
 
 Template.MasterLayout.helpers
+  OnlineUsers: ->
+    Meteor.users.find({'status.online': true, _id: {$ne: Meteor.userId()}})
 
 
 # Lifecycle Hooks

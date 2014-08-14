@@ -7,5 +7,9 @@ template(name='MasterLayout')
         +with currentUser
           img(src=profile.avatar width="32" height="32" style="vertical-align: bottom")
       +loginButtons
+  #userstatus
+    | Other Users Online:
+    each OnlineUsers
+      img.online(src=profile.avatar title=profile.name)
   #main
     +yield
