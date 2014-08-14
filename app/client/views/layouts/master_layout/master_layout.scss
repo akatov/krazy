@@ -45,6 +45,19 @@ $basecolor: #AD141E;
   }
 }
 
+#userstatus {
+  float: right;
+  text-align: right;
+  margin-right: 10px;
+
+  .online {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    vertical-align: text-bottom;
+  }
+}
+
 #main {
   margin: 10px;
   position: absolute;
