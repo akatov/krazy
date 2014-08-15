@@ -11,4 +11,5 @@ Router.configure({
 
 Router.map(function () {
   this.route('index', {path: '/'});
+  this.route('boards.show', {path: '/boards/:_id'});
 });
