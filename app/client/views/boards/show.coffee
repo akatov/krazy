@@ -1,9 +1,23 @@
+# for positioning of new widgets
+# TODO: use a better layout algorithm
+position = 0
 
-# BoardsShow: Event Handlers and Helpers
+# Events
+
 Template.BoardsShow.events
-# Example:
-#  "click .selector": (e, tmpl) ->
-#
+  'click .action-new-widget': (event, template) ->
+    board_id = template.data.board._id
+    Widgets.insert
+      owner: Meteor.user()
+      contents: ''
+      position:
+        x: position
+        y: position
+      voteOptions: []
+      votes: {}
+      editable: true
+      board_id: board_id
+    position += 50
 
 Template.BoardsShow.helpers
 # Example:
@@ -16,4 +30,3 @@ Template.BoardsShow.created = ->
 Template.BoardsShow.rendered = ->
 
 Template.BoardsShow.destroyed = ->
-
