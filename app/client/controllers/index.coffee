@@ -2,8 +2,7 @@ class @IndexController extends RouteController
   waitOn: ->
 
   data: ->
-    board:
-      widgets: Widgets.find()
+    boards: Boards.find()
 
   action: ->
     @render()

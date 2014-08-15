@@ -4,8 +4,9 @@ position = 0
 
 # Events
 
-Template.Board.events
+Template.BoardsShow.events
   'click .action-new-widget': (event, template) ->
+    board_id = template.data.board._id
     Widgets.insert
       owner: Meteor.user()
       contents: ''
@@ -15,16 +16,17 @@ Template.Board.events
       voteOptions: []
       votes: {}
       editable: true
+      board_id: board_id
     position += 50
 
-Template.Board.helpers
+Template.BoardsShow.helpers
 # Example:
 #   items: ->
 #
 
-# Board: Lifecycle Hooks
-Template.Board.created = ->
+# BoardsShow: Lifecycle Hooks
+Template.BoardsShow.created = ->
 
-Template.Board.rendered = ->
+Template.BoardsShow.rendered = ->
 
-Template.Board.destroyed = ->
+Template.BoardsShow.destroyed = ->

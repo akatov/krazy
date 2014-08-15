@@ -1,9 +1,0 @@
-template(name='Index')
-  if currentUser
-    with board
-      +Board
-  else
-    .logged-out
-      .text Please log in with facebook
-      .button
-        +loginButtons
