@@ -1,5 +1,6 @@
 template(name="Board")
-  h1 My Board
+  h1
+    = board.name
   button.action-new-widget new widget
   #board
     each widgets

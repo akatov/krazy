@@ -6,6 +6,7 @@ position = 0
 
 Template.Board.events
   'click .action-new-widget': (event, template) ->
+    board_id = template.data.board._id
     Widgets.insert
       owner: Meteor.user()
       contents: ''
@@ -15,6 +16,7 @@ Template.Board.events
       voteOptions: []
       votes: {}
       editable: true
+      board_id: board_id
     position += 50
 
 Template.Board.helpers
