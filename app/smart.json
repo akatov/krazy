@@ -4,6 +4,7 @@
     "scss": {},
     "jqueryui": {},
     "iron-router": {},
-    "user-status": {}
+    "user-status": {},
+    "velocity": {}
   }
 }

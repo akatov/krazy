@@ -6,7 +6,8 @@
       "scss": {},
       "jqueryui": {},
       "iron-router": {},
-      "user-status": {}
+      "user-status": {},
+      "velocity": {}
     },
     "packages": {
       "jade": {
@@ -33,6 +34,11 @@
         "git": "https://github.com/mizzao/meteor-user-status.git",
         "tag": "v0.6.0",
         "commit": "dba80d742522ac104f2155f1db852922e4249f96"
+      },
+      "velocity": {
+        "git": "https://github.com/xolvio/velocity.git",
+        "tag": "v0.1.18",
+        "commit": "1958c117417e832c3e9025088cca845b4a82728f"
       },
       "build-fetcher": {
         "git": "https://github.com/mizzao/meteor-build-fetcher.git",
