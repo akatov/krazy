@@ -11,9 +11,9 @@ Router.configure({
 
 Router.onBeforeAction(function(){
   if (!Meteor.userId()) {
-    Router.go('index')
+    Router.go('index');
   }
-}, {only: ['boards.show']})
+}, {only: ['boards.show']});
 
 Router.map(function () {
   this.route('index', {path: '/'});
