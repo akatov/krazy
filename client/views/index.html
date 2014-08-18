@@ -6,6 +6,9 @@
         <a href={{pathFor 'boards.show' this}}>{{name}}</a>
       </li>
       {{/each}}
+      <li>
+        <button class='action-new-board'>New Board</button>
+      </li>
     </ul>
   {{else}}
     <div class='logged-out'>
