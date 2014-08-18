@@ -3,7 +3,7 @@
 # *  Boards.findPublic = function () {
 # *    return Boards.find({is_public: true});
 # *  }
-# 
+#
 Boards.allow
   insert: (userId, doc) ->
     true
