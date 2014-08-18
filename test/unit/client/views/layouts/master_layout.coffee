@@ -1,0 +1,1 @@
+Template.stub 'MasterLayout'

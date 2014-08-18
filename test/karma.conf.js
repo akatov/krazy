@@ -24,6 +24,9 @@ module.exports = function(config){
             'test/unit/**/*.js',
             'test/unit/**/*.coffee',
 
+          // underscore installed through bower
+          'test/lib/underscore/underscore-min.js',
+
             // Models have to load next as they're auto-stubbed by RTD
             'app/models/**/*.js',
             'app/models/**/*.coffee',
