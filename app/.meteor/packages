@@ -15,3 +15,9 @@ accounts-ui
 iron-router
 user-status
 velocity
+velocity-quick-start
+
+jasmine-unit
+mocha-web-velocity
+jasmine
+velocity-html-reporter
