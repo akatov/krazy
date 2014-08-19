@@ -12,6 +12,7 @@
     "jasmine-unit": {},
     "mocha-web-velocity": {},
     "jasmine": {},
-    "velocity-html-reporter": {}
+    "velocity-html-reporter": {},
+    "famous-components": {}
   }
 }
