@@ -1,0 +1,45 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+$basecolor: #AD141E;
+
+#topbar {
+  background: $basecolor;
+  margin: 10px;
+  @include border-radius(10px);
+  overflow: hidden;
+  display: block;
+
+  #logo {
+    float: left;
+    border: 0;
+    margin: 10px;
+	  background: url(8ball.png) no-repeat center;
+	  background-size: 40px 40px;
+	  width: 40px;
+	  height: 40px;
+    cursor: pointer;
+  }
+
+  #brand {
+    margin: 10px;
+    float: left;
+    color: lighten($basecolor,50%) !important;
+    font-size: 200%;
+    font-variant: small-caps;
+    cursor: pointer;
+  }
+
+  #userbar {
+    margin: 10px;
+    float: right;
+
+    .login-display-name {
+      color: lighten($basecolor,50%) !important;
+    }
+  }
+}
