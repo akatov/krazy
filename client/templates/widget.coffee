@@ -68,7 +68,7 @@ Template.Widget.events
   'click .action-delete': (event, template) ->
     widget = template.data
     if canModifyWidget widget
-      Widgets.remove widget._id
+      widget.destroy()
 
   'click .action-vote': (event, template)->
     widget = template.data
@@ -77,11 +77,7 @@ Template.Widget.events
     v = $(event.target).attr("name")
     uid = User.currentId()
 
-    Widgets.update(
-      _id: widget._id
-    ,
-      $set: _.object([["votes.#{uid}", v]])
-    )
+    widget.update _.object([["votes.#{uid}", v]])
 
   'click .voter.me': (event, template)->
     widget = template.data
@@ -89,46 +85,28 @@ Template.Widget.events
 
     uid = User.currentId()
 
-    Widgets.update(
-      _id: widget._id
-    ,
-      $unset: _.object([["votes.#{uid}", '']])
-    )
+    widget.del "votes.#{uid}"
 
   'dblclick .action-edit': (event, template) ->
     widget = template.data
     return unless canModifyWidget widget
 
-    Widgets.update(
-      _id: widget._id
-    ,
-      $set: editable: !@editable
-    )
+    widget.update editable: !@editable
 
   'click .action-select-template': (event, template) ->
     widget = template.data
     tempId = $(event.target).val()
     return unless tempId
     t = VotingTemplate.first tempId
-    Widgets.update(
-      _id: widget._id
-    ,
-      $set:
-        voteOptions: t.opts
-    )
+    widget.update voteOptions: t.opts
 
   'click .action-save': (event, template) ->
     widget = template.data
     if canModifyWidget widget
       v = template.$('textarea').val()
-      Widgets.update(
-        _id: widget._id
-      ,
-        $set:
-          contents: v
-          editable: false
-      )
-
+      widget.update
+        contents: v
+        editable: false
 
 # Widget: Lifecycle Hooks
 
@@ -138,7 +116,8 @@ Template.Widget.rendered = ->
 
   onDragOrStop = (event, ui) =>
     p = ui.position
-    Widgets.update @data._id, $set: position: { x: p.left, y: p.top }
+    widget = Widget.first @data._id
+    widget.update position: { x: p.left, y: p.top }
 
   @$('.widget').draggable
     handle: '.widget-header'
