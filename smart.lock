@@ -5,14 +5,17 @@
       "jade": {},
       "scss": {},
       "jqueryui": {},
-      "iron-router": {},
+      "iron-router": {
+        "version": "0.8.2"
+      },
       "user-status": {},
       "velocity": {},
       "velocity-quick-start": {},
       "jasmine-unit": {},
       "mocha-web-velocity": {},
       "jasmine": {},
-      "velocity-html-reporter": {}
+      "velocity-html-reporter": {},
+      "famous-components": {}
     },
     "packages": {
       "jade": {
@@ -70,6 +73,11 @@
         "tag": "v0.1.4",
         "commit": "55f973519fb6db831678219057854b94a4cec846"
       },
+      "famous-components": {
+        "git": "https://github.com/gadicc/meteor-famous-components.git",
+        "tag": "v0.0.19",
+        "commit": "9b34e9e89bd852f162fe101aa3103ff5937eb5c9"
+      },
       "build-fetcher": {
         "git": "https://github.com/mizzao/meteor-build-fetcher.git",
         "tag": "v0.2.0",
@@ -94,6 +102,11 @@
         "git": "https://github.com/xdissent/meteor-mirror.git",
         "tag": "v0.0.2",
         "commit": "03d965dcab2f976a1fdc6ce513edcd4c17b75746"
+      },
+      "pince": {
+        "git": "https://github.com/mad-eye/pince.git",
+        "tag": "v0.0.5",
+        "commit": "4524ecc0bdf043c49dc62e91bbd8a99c661081ed"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
