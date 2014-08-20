@@ -15,7 +15,8 @@
       "mocha-web-velocity": {},
       "jasmine": {},
       "velocity-html-reporter": {},
-      "famous-components": {}
+      "famous-components": {},
+      "minimongoid": {}
     },
     "packages": {
       "jade": {
@@ -75,8 +76,13 @@
       },
       "famous-components": {
         "git": "https://github.com/gadicc/meteor-famous-components.git",
-        "tag": "v0.0.19",
-        "commit": "9b34e9e89bd852f162fe101aa3103ff5937eb5c9"
+        "tag": "v0.0.21",
+        "commit": "8b4e629a81f421f21b1e6a7dcfe3eb3764febbda"
+      },
+      "minimongoid": {
+        "git": "https://github.com/Exygy/minimongoid.git",
+        "tag": "v0.8.8",
+        "commit": "cf8d0bec44934d617544965977f270f2a8cdca02"
       },
       "build-fetcher": {
         "git": "https://github.com/mizzao/meteor-build-fetcher.git",
@@ -107,6 +113,11 @@
         "git": "https://github.com/mad-eye/pince.git",
         "tag": "v0.0.5",
         "commit": "4524ecc0bdf043c49dc62e91bbd8a99c661081ed"
+      },
+      "underscore-string-latest": {
+        "git": "https://github.com/TimHeckel/meteor-underscore-string.git",
+        "tag": "v2.3.3",
+        "commit": "4a5d70eee48fbd90a6e6fc78747250d704a0b3bb"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
