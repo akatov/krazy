@@ -6,8 +6,7 @@ Router.configure
   routeControllerNameConverter: 'upperCamelCase'
 
 Router.onBeforeAction ->
-  unless Meteor.userId()
-    Router.go('index')
+  Router.go 'index' unless User.currentId()
 , only: ['boards.show']
 
 Router.map ->

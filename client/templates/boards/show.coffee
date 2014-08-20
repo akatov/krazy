@@ -8,7 +8,7 @@ Template.BoardsShow.events
   'click .action-new-widget': (event, template) ->
     board_id = template.data.board._id
     Widgets.insert
-      owner: Meteor.user()
+      owner: User.current()
       contents: ''
       position:
         x: position

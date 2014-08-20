@@ -7,13 +7,13 @@ numVotesForWidget = (w) ->
   numVotes
 
 canModifyWidget = (w) ->
-  w.owner._id == Meteor.userId() && numVotesForWidget(w) == 0
+  w.owner._id == User.currentId() && numVotesForWidget(w) == 0
 
 canVoteOnWidget = (w) ->
   !w.editable
 
 isNewWidget = (w) ->
-  uid = Meteor.userId()
+  uid = User.currentId()
   return false if uid == w.owner._id
   _.all w.votes, (v, k) -> k != uid
 
@@ -26,14 +26,14 @@ Template.Widget.helpers
     VotingTemplates.find()
 
   voteLines: ->
-    me_id = Meteor.userId()
+    me_id = User.currentId()
     _.map @voteOptions, (s) => {
       name: s
       voters: _.chain(@votes)
         .pairs()
         .filter((kv) -> kv[1] == s)
         .map((kv) ->
-          u = Meteor.users.findOne(kv[0])
+          u = User.find kv[0]
           {
             _id: u._id
             name: u.profile.name
@@ -75,7 +75,7 @@ Template.Widget.events
     return unless canVoteOnWidget widget
 
     v = $(event.target).attr("name")
-    uid = Meteor.userId()
+    uid = User.currentId()
 
     Widgets.update(
       _id: widget._id
@@ -87,7 +87,7 @@ Template.Widget.events
     widget = template.data
     return unless canVoteOnWidget widget
 
-    uid = Meteor.userId()
+    uid = User.currentId()
 
     Widgets.update(
       _id: widget._id
