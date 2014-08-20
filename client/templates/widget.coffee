@@ -23,7 +23,7 @@ isNewWidget = (w) ->
 Template.Widget.helpers
 
   votingTemplates: ->
-    VotingTemplates.find()
+    VotingTemplate.find()
 
   voteLines: ->
     me_id = User.currentId()
@@ -109,7 +109,7 @@ Template.Widget.events
     widget = template.data
     tempId = $(event.target).val()
     return unless tempId
-    t = VotingTemplates.findOne(tempId)
+    t = VotingTemplate.first tempId
     Widgets.update(
       _id: widget._id
     ,
