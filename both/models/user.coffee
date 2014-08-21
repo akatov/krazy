@@ -2,6 +2,11 @@ class @User extends Minimongoid
 
   @_collection: Meteor.users
 
+  @has_many: [
+    name: 'widgets'
+    foreign_key: 'owner_id'
+  ]
+
   @currentId: ->
     Meteor.userId()
 

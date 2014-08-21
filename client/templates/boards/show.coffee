@@ -8,7 +8,7 @@ Template.BoardsShow.events
   'click .action-new-widget': (event, template) ->
     board_id = template.data.board._id
     Widget.create
-      owner: User.current()
+      owner_id: User.currentId()
       contents: ''
       position:
         x: position

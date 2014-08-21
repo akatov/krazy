@@ -7,14 +7,14 @@ numVotesForWidget = (w) ->
   numVotes
 
 canModifyWidget = (w) ->
-  w.owner._id == User.currentId() && numVotesForWidget(w) == 0
+  w.owner()._id == User.currentId() && numVotesForWidget(w) == 0
 
 canVoteOnWidget = (w) ->
   !w.editable
 
 isNewWidget = (w) ->
   uid = User.currentId()
-  return false if uid == w.owner._id
+  return false if uid == w.owner()._id
   _.all w.votes, (v, k) -> k != uid
 
 
