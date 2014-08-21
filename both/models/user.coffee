@@ -16,8 +16,10 @@ class @User extends Minimongoid
   @online: ->
     @where({'status.online': true, _id: {$ne: Meteor.userId()}})
 
-  avatar: ->
-    @profile.avatar
+  @property 'avatar',
+    get: ->
+      @profile.avatar
 
-  name: ->
-    @profile.name
+  @property 'name',
+    get: ->
+      @profile.name
