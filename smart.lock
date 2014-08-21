@@ -70,8 +70,8 @@
       },
       "famous-components": {
         "git": "https://github.com/gadicc/meteor-famous-components.git",
-        "tag": "v0.0.21",
-        "commit": "8b4e629a81f421f21b1e6a7dcfe3eb3764febbda"
+        "tag": "v0.0.22",
+        "commit": "c150b00939ed2a44f05581ab5694d95227cd2d4c"
       },
       "minimongoid": {
         "git": "https://github.com/Exygy/minimongoid.git",
