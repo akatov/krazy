@@ -1,0 +1,18 @@
+<template name="MasterLayout">
+  {{#HeaderFooterLayout size="[undefined, undefined]"}}
+    {{>Surface template="Header" target="header" size="[undefined,60]"}}
+    {{#Surface target="footer" size="[undefined,20]"}}
+      <div id="userstatus">
+        Other Users Online:
+        {{#each OnlineUsers}}
+          <img class="online" src={{avatar}} title={{name}}>
+        {{/each}}
+      </div>
+    {{/Surface}}
+    {{#Surface target="content"}}
+      <div id="main">
+        {{>yield}}
+      </div>
+    {{/Surface}}
+  {{/HeaderFooterLayout}}
+</template>

@@ -1,0 +1,57 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+/* base color used in topbar */
+$basecolor: #AD141E;
+
+.logged-out {
+  text-align: center;
+
+  .text, .button {
+    margin-top: 10px;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.link {
+  position: absolute;
+  border: 1px black solid;
+  -webkit-transform-origin: 0 0;
+}
+
+.avatar {
+
+  &.small {
+    width: 20px;
+    height: 20px;
+  }
+
+  &.large {
+    width: 44px;
+    height: 44px;
+    margin: 5px;
+  }
+
+}
+
+#board {
+  position: absolute;
+}
+
+
+a {
+  color: blue;
+  cursor: pointer;
+}
+
+a:hover {
+  color: red;
+}
+

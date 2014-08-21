@@ -1,0 +1,21 @@
+<template name='Index'>
+  {{#if currentUser}}
+    <ul>
+      {{#each boards}}
+      <li>
+        <a href={{pathFor 'boards.show' this}}>{{name}}</a>
+      </li>
+      {{/each}}
+      <li>
+        <button class='action-new-board'>New Board</button>
+      </li>
+    </ul>
+  {{else}}
+    <div class='logged-out'>
+      <div class='text'>Please log in with facebook></div>
+      <div class='button'>
+        {{> loginButtons }}
+      </div>
+    </div>
+  {{/if}}
+</template>
