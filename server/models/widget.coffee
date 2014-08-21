@@ -1,8 +1,4 @@
-# Add query methods like this:
-#  Widgets.findPublic = ->
-#    Widgets.find is_public: true
-
-Widgets.allow
+Widget._collection.allow
   insert: (userId, doc) ->
     true
 
@@ -12,7 +8,7 @@ Widgets.allow
   remove: (userId, doc) ->
     true
 
-Widgets.deny
+Widget._collection.deny
   insert: (userId, doc) ->
     false
 
@@ -23,5 +19,5 @@ Widgets.deny
     false
 
 Meteor.startup ->
-  # always clean Widgets collection at startup for now
-  Widgets.remove _id: $exists: true
+  # always clean widgets collection at startup for now
+  Widget.destroyAll()

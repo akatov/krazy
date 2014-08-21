@@ -7,14 +7,14 @@ numVotesForWidget = (w) ->
   numVotes
 
 canModifyWidget = (w) ->
-  w.owner._id == Meteor.userId() && numVotesForWidget(w) == 0
+  w.owner()._id == User.currentId() && numVotesForWidget(w) == 0
 
 canVoteOnWidget = (w) ->
   !w.editable
 
 isNewWidget = (w) ->
-  uid = Meteor.userId()
-  return false if uid == w.owner._id
+  uid = User.currentId()
+  return false if uid == w.owner()._id
   _.all w.votes, (v, k) -> k != uid
 
 
@@ -23,17 +23,17 @@ isNewWidget = (w) ->
 Template.Widget.helpers
 
   votingTemplates: ->
-    VotingTemplates.find()
+    VotingTemplate.find()
 
   voteLines: ->
-    me_id = Meteor.userId()
+    me_id = User.currentId()
     _.map @voteOptions, (s) => {
       name: s
       voters: _.chain(@votes)
         .pairs()
         .filter((kv) -> kv[1] == s)
         .map((kv) ->
-          u = Meteor.users.findOne(kv[0])
+          u = User.find kv[0]
           {
             _id: u._id
             name: u.profile.name
@@ -68,67 +68,45 @@ Template.Widget.events
   'click .action-delete': (event, template) ->
     widget = template.data
     if canModifyWidget widget
-      Widgets.remove widget._id
+      widget.destroy()
 
   'click .action-vote': (event, template)->
     widget = template.data
     return unless canVoteOnWidget widget
 
     v = $(event.target).attr("name")
-    uid = Meteor.userId()
+    uid = User.currentId()
 
-    Widgets.update(
-      _id: widget._id
-    ,
-      $set: _.object([["votes.#{uid}", v]])
-    )
+    widget.update _.object([["votes.#{uid}", v]])
 
   'click .voter.me': (event, template)->
     widget = template.data
     return unless canVoteOnWidget widget
 
-    uid = Meteor.userId()
+    uid = User.currentId()
 
-    Widgets.update(
-      _id: widget._id
-    ,
-      $unset: _.object([["votes.#{uid}", '']])
-    )
+    widget.del "votes.#{uid}"
 
   'dblclick .action-edit': (event, template) ->
     widget = template.data
     return unless canModifyWidget widget
 
-    Widgets.update(
-      _id: widget._id
-    ,
-      $set: editable: !@editable
-    )
+    widget.update editable: !@editable
 
   'click .action-select-template': (event, template) ->
     widget = template.data
     tempId = $(event.target).val()
     return unless tempId
-    t = VotingTemplates.findOne(tempId)
-    Widgets.update(
-      _id: widget._id
-    ,
-      $set:
-        voteOptions: t.opts
-    )
+    t = VotingTemplate.first tempId
+    widget.update voteOptions: t.opts
 
   'click .action-save': (event, template) ->
     widget = template.data
     if canModifyWidget widget
       v = template.$('textarea').val()
-      Widgets.update(
-        _id: widget._id
-      ,
-        $set:
-          contents: v
-          editable: false
-      )
-
+      widget.update
+        contents: v
+        editable: false
 
 # Widget: Lifecycle Hooks
 
@@ -138,7 +116,8 @@ Template.Widget.rendered = ->
 
   onDragOrStop = (event, ui) =>
     p = ui.position
-    Widgets.update @data._id, $set: position: { x: p.left, y: p.top }
+    widget = Widget.first @data._id
+    widget.update position: { x: p.left, y: p.top }
 
   @$('.widget').draggable
     handle: '.widget-header'

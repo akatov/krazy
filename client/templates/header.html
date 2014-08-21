@@ -3,9 +3,9 @@
     <div id="logo" class="action-go-home"></div>
     <div id="brand" class="action-go-home">krazy.io</div>
     <div id="userbar">
-      {{#if currentUser}}
+      {{#if currentUserId}}
         {{#with currentUser}}
-          <img src={{profile.avatar}} width="32" height="32" style="vertical-align: bottom">
+          <img src={{avatar}} width="32" height="32" style="vertical-align: bottom">
         {{/with}}
       {{/if}}
       {{>loginButtons}}

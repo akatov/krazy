@@ -1,10 +1,4 @@
-#
-# * Add query methods like this:
-# *  Boards.findPublic = function () {
-# *    return Boards.find({is_public: true});
-# *  }
-#
-Boards.allow
+Board._collection.allow
   insert: (userId, doc) ->
     true
 
@@ -14,7 +8,7 @@ Boards.allow
   remove: (userId, doc) ->
     true
 
-Boards.deny
+Board._collection.deny
   insert: (userId, doc) ->
     false
 
@@ -25,15 +19,12 @@ Boards.deny
     false
 
 Meteor.startup ->
-  Boards.remove _id: $exists: true
-  [
-    _id: '1'
+  Board.destroyAll()
+  _.forEach [
     name: 'Board 1'
   ,
-    _id: '2'
     name: 'Board 2'
   ,
-    _id: '3'
     name: 'Board 3'
-  ].forEach (b) ->
-    Boards.insert b
+  ], (b) ->
+    Board.create b

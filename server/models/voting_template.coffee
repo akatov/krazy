@@ -1,8 +1,4 @@
-# Add query methods like this:
-#  VotingTemplates.findPublic ->
-#    VotingTemplates.find is_public: true
-
-VotingTemplates.allow
+VotingTemplate._collection.allow
   insert: (userId, doc) ->
     true
 
@@ -12,7 +8,7 @@ VotingTemplates.allow
   remove: (userId, doc) ->
     true
 
-VotingTemplates.deny
+VotingTemplate._collection.deny
   insert: (userId, doc) ->
     false
 
@@ -23,8 +19,8 @@ VotingTemplates.deny
     false
 
 Meteor.startup ->
-  if VotingTemplates.find().count() == 0
-    _.forEach([
+  if VotingTemplate.count() == 0
+    _.forEach [
       name: "OK"
       opts: ["OK"]
       clss: ["positive"]
@@ -37,5 +33,4 @@ Meteor.startup ->
       opts: ["Like", "Dislike", "Whatev"],
       clss: ["positive", "negative", "neutral"]
     ], (t) ->
-      VotingTemplates.insert t
-    )
+      VotingTemplate.create t

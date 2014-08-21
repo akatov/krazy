@@ -4,7 +4,7 @@ boardNumber = 3
 Template.Index.events
   'click .action-new-board': (event, template) ->
     boardNumber++
-    Boards.insert
+    Board.create
       name: "Board #{boardNumber}"
 
 Template.Index.helpers
