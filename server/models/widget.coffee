@@ -17,7 +17,3 @@ Widget._collection.deny
 
   remove: (userId, doc) ->
     false
-
-Meteor.startup ->
-  # always clean widgets collection at startup for now
-  Widget.destroyAll()

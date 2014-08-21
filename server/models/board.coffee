@@ -17,14 +17,3 @@ Board._collection.deny
 
   remove: (userId, doc) ->
     false
-
-Meteor.startup ->
-  Board.destroyAll()
-  _.forEach [
-    name: 'Board 1'
-  ,
-    name: 'Board 2'
-  ,
-    name: 'Board 3'
-  ], (b) ->
-    Board.create b
