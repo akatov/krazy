@@ -15,7 +15,9 @@
       "jasmine": {},
       "velocity-html-reporter": {},
       "famous-components": {},
-      "minimongoid": {}
+      "minimongoid": {
+        "version": "0.8.0"
+      }
     },
     "packages": {
       "jade": {
@@ -75,8 +77,8 @@
       },
       "minimongoid": {
         "git": "https://github.com/Exygy/minimongoid.git",
-        "tag": "v0.8.8",
-        "commit": "cf8d0bec44934d617544965977f270f2a8cdca02"
+        "tag": "v0.8.0",
+        "commit": "4f62f61ad5a34688e2b547dc843d76de4a254f7d"
       },
       "build-fetcher": {
         "git": "https://github.com/mizzao/meteor-build-fetcher.git",
