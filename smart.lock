@@ -15,7 +15,9 @@
       "jasmine": {},
       "velocity-html-reporter": {},
       "famous-components": {},
-      "minimongoid": {}
+      "minimongoid": {
+        "version": "0.8.0"
+      }
     },
     "packages": {
       "jade": {
@@ -70,13 +72,13 @@
       },
       "famous-components": {
         "git": "https://github.com/gadicc/meteor-famous-components.git",
-        "tag": "v0.0.21",
-        "commit": "8b4e629a81f421f21b1e6a7dcfe3eb3764febbda"
+        "tag": "v0.0.22",
+        "commit": "c150b00939ed2a44f05581ab5694d95227cd2d4c"
       },
       "minimongoid": {
         "git": "https://github.com/Exygy/minimongoid.git",
-        "tag": "v0.8.8",
-        "commit": "cf8d0bec44934d617544965977f270f2a8cdca02"
+        "tag": "v0.8.0",
+        "commit": "4f62f61ad5a34688e2b547dc843d76de4a254f7d"
       },
       "build-fetcher": {
         "git": "https://github.com/mizzao/meteor-build-fetcher.git",

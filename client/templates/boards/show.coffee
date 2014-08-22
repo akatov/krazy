@@ -6,15 +6,15 @@ position = 0
 
 Template.BoardsShow.events
   'click .action-new-widget': (event, template) ->
-    board_id = template.data.board._id
-    Widget.create
+    board_id = template.data.board.id
+    w = Widget.create
       owner_id: User.currentId()
       contents: ''
       position:
         x: position
         y: position
       voteOptions: []
-      votes: {}
+      votes: []
       editable: true
       board_id: board_id
     position += 50

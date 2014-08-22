@@ -38,8 +38,9 @@ $basecolor: #AD141E;
     margin: 10px;
     float: right;
 
-    .login-display-name {
+    .name {
       color: lighten($basecolor,50%) !important;
+      font-weight: bold;
     }
   }
 }

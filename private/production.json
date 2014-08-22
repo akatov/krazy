@@ -1,0 +1,12 @@
+{
+  "public" : {
+    "mode" : "production"
+  },
+  "services" : [
+    {
+      "service" : "facebook",
+      "appId" : "727631410641208",
+      "secret" : "217ec22f62ffba4e954ff732f279f5a8"
+    }
+  ]
+}

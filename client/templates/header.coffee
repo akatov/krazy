@@ -4,3 +4,5 @@ Template.Header.events
     # use `event.stopImmediatePropagation()` if you want
     # to capture this at a lower level
 
+  'click .action-logout': (event, template) ->
+    Meteor.logout()
