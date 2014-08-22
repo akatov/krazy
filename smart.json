@@ -13,6 +13,8 @@
     "jasmine": {},
     "velocity-html-reporter": {},
     "famous-components": {},
-    "minimongoid": {}
+    "minimongoid": {
+      "version": "0.8.0"
+    }
   }
 }

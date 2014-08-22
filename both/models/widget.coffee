@@ -8,3 +8,15 @@ class @Widget extends Minimongoid
     name: 'owner'
     class_name: 'User'
   ]
+
+  @embeds_many: [
+    name: 'votes'
+  ]
+
+class @Vote extends Minimongoid
+
+  @embedded_in: 'widget'
+
+  @belongs_to: [
+    name: 'user'
+  ]

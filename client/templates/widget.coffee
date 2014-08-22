@@ -7,15 +7,15 @@ numVotesForWidget = (w) ->
   numVotes
 
 canModifyWidget = (w) ->
-  w.owner()._id == User.currentId() && numVotesForWidget(w) == 0
+  w.owner_id == User.currentId() && numVotesForWidget(w) == 0
 
 canVoteOnWidget = (w) ->
   !w.editable
 
 isNewWidget = (w) ->
   uid = User.currentId()
-  return false if uid == w.owner()._id
-  _.all w.votes, (v, k) -> k != uid
+  return false if uid == w.owner_id
+  _.all w.votes, (v) -> v.user_id != uid
 
 
 # Helpers
@@ -30,18 +30,17 @@ Template.Widget.helpers
     _.map @voteOptions, (s) => {
       name: s
       voters: _.chain(@votes)
-        .pairs()
-        .filter((kv) -> kv[1] == s)
-        .map((kv) ->
-          u = User.find kv[0]
+        .filter((vote) -> vote.value == s)
+        .map((vote) ->
+          u = User.find vote.user_id
           {
-            _id: u._id
+            _id: u.id
             name: u.profile.name
             avatar: u.profile.avatar
-            klass: if me_id == u._id then 'me' else ''
+            klass: if me_id == u.id then 'me' else ''
           }
         )
-        .sortBy((u) -> u._id != me_id) # false comes before true
+        .sortBy((u) -> u.id != me_id) # false comes before true
         .value()
     }
 
@@ -77,15 +76,18 @@ Template.Widget.events
     v = $(event.target).attr("name")
     uid = User.currentId()
 
-    widget.update _.object([["votes.#{uid}", v]])
+    # TODO: see whether there's a single operation for this
+    widget.constructor._collection.update widget.id,
+      $pull: {votes: {user_id: uid}}
+    widget.push votes: { user_id: uid, value: @name }
 
   'click .voter.me': (event, template)->
     widget = template.data
     return unless canVoteOnWidget widget
 
     uid = User.currentId()
-
-    widget.del "votes.#{uid}"
+    widget.constructor._collection.update widget.id,
+      $pull: {votes: {user_id: uid}}
 
   'dblclick .action-edit': (event, template) ->
     widget = template.data
@@ -116,7 +118,7 @@ Template.Widget.rendered = ->
 
   onDragOrStop = (event, ui) =>
     p = ui.position
-    widget = Widget.first @data._id
+    widget = Widget.first @data.id
     widget.update position: { x: p.left, y: p.top }
 
   @$('.widget').draggable
