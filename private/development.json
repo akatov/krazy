@@ -12,6 +12,11 @@
       "service": "google",
       "clientId": "391900386119-g2aee1fjgirfh1g1mk4erdhek2lkiqm2.apps.googleusercontent.com",
       "secret": "C3ZdFia9K5XXu4mVlbvsWl9E"
+    },
+    {
+      "service": "meetup",
+      "clientId": "n57ng6tj0cf44jdu2lbf7lhtcc",
+      "secret": "ojfchagba166s8mhdp05f6tdlh"
     }
   ]
 }
