@@ -7,6 +7,11 @@
       "service": "facebook",
       "appId": "727684220635927",
       "secret": "606764bf19e1afe8322ec616bee84ae2"
+    },
+    {
+      "service": "google",
+      "clientId": "391900386119-g2aee1fjgirfh1g1mk4erdhek2lkiqm2.apps.googleusercontent.com",
+      "secret": "C3ZdFia9K5XXu4mVlbvsWl9E"
     }
   ]
 }
