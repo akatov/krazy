@@ -6,9 +6,10 @@
       {{#if currentUserId}}
         {{#with currentUser}}
           <img src={{avatar}} width="32" height="32" style="vertical-align: bottom">
+          <span class="name">{{name}}</span>
         {{/with}}
+        <button class="action-logout">Logout</button>
       {{/if}}
-      {{>loginButtons}}
     </div>
   </div>
 </template>
